@@ -20,6 +20,8 @@ describe("GET /", () => {
       const res = await request(app).get("/");
       expect(res.statusCode).toBe(200);
       expect(res.text.length).toBeGreaterThan(10);
+      expect(res.text.includes("prueba"));
+      expect(res.text.includes("bienvenida"));
     });
-  });
+  }); 
   
