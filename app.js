@@ -1,11 +1,12 @@
-const express = require("express");
-
+// allows acces to enviroment variables in proces.env
+require('dotenv').config() 
 
 // crear servidor
+const express = require("express");
 const app = express(); 
 
 // utilities
-app.use(express.json())
+app.use(express.json()) // allows JSON parsing capabilities
 
 /*
 // add router
@@ -20,8 +21,4 @@ app.get("/", (req, res) => {
 });
 //...
 
-// levantar servidor
-const port = 3000;
-app.listen(port, () => {
-    console.log(`sitio escuchando en el puerto ${port}`);
-});
+module.exports = app;
