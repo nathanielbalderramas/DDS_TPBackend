@@ -27,4 +27,4 @@ async function populate_db() {
     }
 };
 
-module.exports(populate_db);
+module.exports = { populate_db };

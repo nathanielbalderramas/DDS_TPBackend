@@ -7,4 +7,4 @@ const Reparacion = sequelize.define(
     {} // options
 );
 
-export { Reparacion }
+module.exports = { Reparacion }

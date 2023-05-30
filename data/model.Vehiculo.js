@@ -7,4 +7,4 @@ const Vehiculo = sequelize.define(
     {} // options
 );
 
-export { Vehiculo }
+module.exports = { Vehiculo }

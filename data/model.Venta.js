@@ -7,4 +7,4 @@ const Venta = sequelize.define(
     {} // options
 );
 
-export { Venta }
+module.exports = { Venta }

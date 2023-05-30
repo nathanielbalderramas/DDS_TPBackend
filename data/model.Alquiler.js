@@ -7,4 +7,4 @@ const Alquiler = sequelize.define(
     {} // options
 );
 
-export { Alquiler }
+module.exports = {Alquiler }

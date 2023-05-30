@@ -25,4 +25,4 @@ const Cliente = sequelize.define(
     {} // options
 );
 
-export { Marca, Estado, Proovedor, Cliente};
+module.exports =  { Marca, Estado, Proovedor, Cliente};
