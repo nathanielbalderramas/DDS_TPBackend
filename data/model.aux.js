@@ -3,7 +3,15 @@ const {db: sequelize} = require("./db-init");
 
 const Marca = sequelize.define(
     "Marca",
-    {}, // fields
+    {id: {type: DataTypes.INTEGER,
+          primaryKey: true,
+          autoincrement: true
+          },
+     nombre: {type: DataTypes.STRING,
+              allowNull: false,
+              unique: true
+            }
+    }, 
     {} // options
 );
 
@@ -25,4 +33,4 @@ const Cliente = sequelize.define(
     {} // options
 );
 
-module.exports =  { Marca, Estado, Proovedor, Cliente};
+module.exports =  { Marca, Estado, Proovedor, Cliente };
