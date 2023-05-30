@@ -1,4 +1,9 @@
-const {db} = requiere("./db-init");
+const {db} = require("./db-init");
+const {Alquiler} = require("./model.Alquiler");
+const {Reparacion} = require("./model.Reparacion");
+const {Venta} = require("./model.Venta");
+const {Vehiculo} = require("./model.Vehiculo");
+const {Marca, Estado, Proovedor, Cliente} = require("./model.aux")
 
 async function populate_db() {
     // Authentication
