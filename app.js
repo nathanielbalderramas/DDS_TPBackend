@@ -50,4 +50,7 @@ app.get("/", (req, res) => {
 
 //...
 
+// fills up db
+require("./data/data-init").populate_db()
+
 module.exports = app;
