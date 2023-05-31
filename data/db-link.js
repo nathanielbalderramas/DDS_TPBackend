@@ -3,16 +3,30 @@ const path = require("path")
 const { touch_db } = require("./db-init");
 const Sequelize = require("sequelize");
 
+const initMarca = require("./model.Marca");
 
-function db_link (database, user, password, dialect) {
-    touch_db();
-    //const sequelize = new Sequelize(path.resolve(database), user, password, {dialect: dialect});
-    const sequelize = new Sequelize({dialect: dialect, storage: database, user: user, passsword: password})
-    return sequelize;
-}
+const initVehiculo = require("./model.Vehiculo");
+const initAlquiler = require("./model.Alquiler");
+const initReparacion = require("./model.Reparacion")
+const initVenta = require("./model.Venta")
 
-const db = db_link(process.env.DATABASE, process.env.USER, process.env.PASSWORD, process.env.DIALECT);
+touch_db();
+const db = new Sequelize({
+    dialect:  process.env.DIALECT, 
+    storage: process.env.DATABASE, 
+    user: process.env.USER, 
+    password: process.env.PASSWORD
+})
 
+const Marca = initMarca(db);
+const Vehiculo = initVehiculo(db);
+const Alquiler = initAlquiler(db);
+const Reparacion = initReparacion(db);
+const Venta = initVenta(db);
+
+Vehiculo.hasOne(Alquiler, {foreignKey: "IdVehiculo"})
+
+check_db(db)
 
 async function check_db(db) {
     // Authentication
@@ -34,6 +48,13 @@ async function check_db(db) {
         console.error(error);
         return;
     }
-};
+}(db);
 
-module.exports = { db, check_db };
+module.exports = {
+    db: db,
+    Marca: Marca,
+    Vehiculo: Vehiculo,
+    Alquiler: Alquiler,
+    Reparacion: Reparacion,
+    Venta: Venta,
+};

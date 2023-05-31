@@ -1,4 +1,6 @@
-const { Marca, Proveedor, Estado, Cliente } = require("../data/model.aux");
+//const { Marca, Proveedor, Estado, Cliente } = require("../data/model.aux");
+const { Marca } = require("../data/db-link")
+
 
 const getMarcas = async (req, res, next) => {
     try {

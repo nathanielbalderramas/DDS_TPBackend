@@ -1,10 +1,20 @@
-const { Model, DataTypes } = require("sequelize");
+const { DataTypes } = require("sequelize");
+/*
 const {db} = require("./db-link");
+const { Alquiler } = require("./model.Alquiler");
+*/
 
-const Vehiculo = db.define(
-    "Vehiculo",
-    {}, // fields
-    {} // options
-);
-
-module.exports = { Vehiculo }
+module.exports = function (db) {
+    const Vehiculo = db.define(
+        "Vehiculo",
+        {
+        IdVehiculo: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+            },
+        }, // fields
+        {} // options
+    );
+    return Vehiculo;
+};
