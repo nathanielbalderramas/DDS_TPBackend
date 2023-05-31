@@ -52,14 +52,4 @@ app.get("/", (req, res) => {
 });
 
 //...
-
-
-// fills up db when does it save... and where to?!
-/*
-const { db, check_db } = require("./data/db-init");
-async () => {
-  await check_db(db);
-}
-*/
-
 module.exports = app;
