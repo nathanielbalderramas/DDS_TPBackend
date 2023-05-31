@@ -1,7 +1,7 @@
 const { Model, DataTypes } = require("sequelize");
-const {db: sequelize} = require("./db-init");
+const {db} = require("./db-link");
 
-const Reparacion = sequelize.define(
+const Reparacion = db.define(
     "Reparacion",
     {}, // fields
     {} // options

@@ -1,7 +1,7 @@
 const { Model, DataTypes } = require("sequelize");
-const {db: sequelize} = require("./db-init");
+const {db} = require("./db-link");
 
-const Alquiler = sequelize.define(
+const Alquiler = db.define(
     "Alquiler",
     {}, // fields
     {} // options
