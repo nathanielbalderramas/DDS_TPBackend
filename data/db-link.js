@@ -3,9 +3,11 @@ const path = require("path")
 const { touch_db } = require("./db-init");
 const Sequelize = require("sequelize");
 
+
 function db_link (database, user, password, dialect) {
     touch_db();
-    const sequelize = new Sequelize(path.resolve(database), user, password, {dialect: dialect});
+    //const sequelize = new Sequelize(path.resolve(database), user, password, {dialect: dialect});
+    const sequelize = new Sequelize({dialect: dialect, storage: database, user: user, passsword: password})
     return sequelize;
 }
 

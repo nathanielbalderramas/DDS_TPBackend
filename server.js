@@ -8,7 +8,7 @@ require("./data/model.Reparacion");
 require("./data/model.Vehiculo");
 require("./data/model.Venta")
 check_db(db);
-console.log(db.models)
+console.log(db)
 
 const app = require("./app");
 const port = process.env.port || 4000;
