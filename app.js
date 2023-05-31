@@ -35,6 +35,9 @@ app.use("/customRoute", customRouter);
 const marcasRouter = require("./routes/marcas");
 app.use("/api", marcasRouter);
 
+const alquileresRouter = require("./routes/alquileres")
+app.use("/api", alquileresRouter)
+
 //...
 
 // example api endpoint
