@@ -1,10 +1,9 @@
-require('dotenv').config({path: "../.env"});
-const Sequelize = require("sequelize");
-function db_init (database, user, password, dialect) {
-    const sequelize = new Sequelize(database, user, password, {dialect: dialect});
-    return sequelize;
+require("dotenv").config({path: "../.env"});
+const sqlite3 = require("sqlite3").verbose();
+
+async function touch_db() {
+    const db = new sqlite3.Database(process.env.DATABASE)
+    await db.close();
 }
 
-const db = db_init(process.env.DATABASE, process.env.USER, process.env.PASSWORD, process.env.DIALECT);
-
-module.exports = { db };
+module.exports = {touch_db}

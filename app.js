@@ -32,6 +32,9 @@ const customRouter = require("./pathTo/customRouter");
 app.use("/customRoute", customRouter);
 */
 
+const marcasRouter = require("./routes/marcas");
+app.use("/api", marcasRouter);
+
 //...
 
 // example api endpoint
@@ -50,7 +53,13 @@ app.get("/", (req, res) => {
 
 //...
 
-// fills up db
-require("./data/data-init").populate_db()
+
+// fills up db when does it save... and where to?!
+/*
+const { db, check_db } = require("./data/db-init");
+async () => {
+  await check_db(db);
+}
+*/
 
 module.exports = app;
