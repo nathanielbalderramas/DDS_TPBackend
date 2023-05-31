@@ -1,11 +1,11 @@
 const { Model, DataTypes } = require("sequelize");
-const {db: sequelize} = require("./db-init");
+const {db} = require("./db-link");
 
-const Marca = sequelize.define(
+const Marca = db.define(
     "Marca",
     {id: {type: DataTypes.INTEGER,
           primaryKey: true,
-          autoincrement: true
+          autoIncrement: true,
           },
      nombre: {type: DataTypes.STRING,
               allowNull: false,
@@ -15,22 +15,22 @@ const Marca = sequelize.define(
     {} // options
 );
 
-const Estado = sequelize.define(
+const Estado = db.define(
     "Estado",
     {}, // fields
     {} // options
 );
 
-const Proovedor = sequelize.define(
-    "Proovedor",
+const Proveedor = db.define(
+    "Proveedor",
     {}, // fields
     {} // options
 );
 
-const Cliente = sequelize.define(
+const Cliente = db.define(
     "Cliente",
     {}, // fields
     {} // options
 );
 
-module.exports =  { Marca, Estado, Proovedor, Cliente };
+module.exports =  { Marca, Estado, Proveedor, Cliente };
