@@ -13,7 +13,7 @@ function makeMonto () {
 
 const getAlquileres = async (req, res, next) => {
     try {
-        const alquileres = await Alquiler.findall();
+        const alquileres = await Alquiler.findAll();
         res.status(200).json(alquileres)
     } catch (error) {
         res.status(500).json(error)
