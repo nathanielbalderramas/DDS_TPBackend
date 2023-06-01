@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { getAlquileres, makeAlquileresRandom, makeUnVehiculoFalso } = require("../controllers/controller.alquiler");
+const { 
+    getAlquileres, 
+    makeAlquileresRandom, 
+    makeUnVehiculoFalso 
+} = require("../controllers/controller.Alquiler");
 
 router.get("/randomdata/alquileres", makeAlquileresRandom);
 

@@ -4,7 +4,7 @@ const router = express.Router();
 const {
     getMarcas,
     makeMarcas
-} = require("../controllers/controller.aux")
+} = require("../controllers/controller.Marca")
 
 
 router.get("/getmarcas", getMarcas);
