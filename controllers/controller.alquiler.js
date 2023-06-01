@@ -26,13 +26,13 @@ const getAlquileres = async (req, res, next) => {
 
 const getAlquileresById = async (req, res, next) => {
     try {
-        const alquileres = await Alquiler.findall({
-            where: {IdAlquiler: req.params.id}
+        const alquileres = await Alquiler.findAll({
+            where: {IdAlquiler: req.params.idAlquiler}
         });
         if (alquileres.length > 0) {
             res.status(200).json(alquileres);
         } else {
-            res.status(404).json({mensaje: "!No encontrado!"})
+            res.status(404).json({mensaje: "¡No encontrado!"})
         }
     } catch (error) {
             res.status(500).json(error);
