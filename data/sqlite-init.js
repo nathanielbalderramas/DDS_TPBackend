@@ -21,7 +21,7 @@ async function CrearBaseVehiculos() {
         await db.run(
             `CREATE table Vehiculos( 
                 IdVehiculo INTEGER PRIMARY KEY AUTOINCREMENT
-              , Marca text NOT NULL 
+              , Marca INTEGER 
               , Modelo text NOT NULL
               , Patente text NOT NULL UNIQUE 
               , Valor real
