@@ -11,18 +11,16 @@ const { makeVehiculos,
         deleteVehiculo,
 } = require("../controllers/controller.Vehiculo");
 
-router.get("/vehiculos", getVehiculos);
+router.get("/vehiculos", getVehiculos); //Obtiene los vehiculos 
 
-router.get("/vehiculosDisponibles", getVehiculos);
+router.get("/vehiculos/make", makeVehiculos); //Agrega vehiculos 
 
-router.get("/vehiculos/make", makeVehiculos);
+router.get("/vehiculos/:id", getVehiculo); //Busqueda de Vehiculos por ID
 
-router.get("/vehiculos/:id", getVehiculo);
+router.post("/vehiculos", postVehiculos); //Carga de Vehiculos por Body
 
-router.post("/vehiculos/", postVehiculos);
+router.put("/vehiculos/:id", putVehiculo); //Modifica un vehiculo de un ID enviado
 
-router.put("/vehiculos/:id", putVehiculo);
-
-router.delete("/vehiculos/:id", deleteVehiculo);
+router.delete("/vehiculos/:id", deleteVehiculo); //Realiza la baja logica del vehiculo
 
 module.exports = router;

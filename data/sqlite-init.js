@@ -162,12 +162,12 @@ async function CrearBaseVentas() {
     let existe = false;
     let res = null;
 
-    sql = "SELECT count(*) as contar FROM sqlite_schema WHERE type = 'table' and name= 'Ventas'";
+    sql = "SELECT count(*) as contar FROM sqlite_schema WHERE type = 'table' and name= 'Venta'";
     res = await db.get(sql, []);
     if (res.contar > 0) existe = true;
     if (!existe) {
         await db.run(
-            `CREATE table Ventas( 
+            `CREATE table Venta( 
                 id INTEGER PRIMARY KEY AUTOINCREMENT
               , Vehiculo INTEGER NOT NULL 
               , Fecha text NOT NULL
@@ -177,10 +177,10 @@ async function CrearBaseVentas() {
               , FOREIGN KEY (Vehiculo) REFERENCES Vehiculos(id)
               );`
         );
-        console.log("tabla Ventas creada!");
+        console.log("tabla Venta creada!");
 
         await db.run(
-            `insert into Marcas values
+            `insert into Venta values
             (1, 1, "12-05-2023", 1, 1),
             (2, 2, "12-05-2023", 2, 1),
             (3, 3, "12-05-2023", 3, 1),

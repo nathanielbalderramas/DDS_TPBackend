@@ -6,14 +6,14 @@ const router = express.Router();
 const { Op, ValidationError } = require("sequelize");
 
 router.get("/clientes", async function (req, res, next) {
-    let busqueda = {};
+    let where = {};
     if (req.query.Documento != undefined && req.query.Documento !== "") {
-      busqueda.Documento = {
+      where.Documento = {
             [Op.like]: "%" + req.query.Documento + "%",
         };
     }
     if (req.query.NombreApellido != undefined && req.query.NombreApellido !== "") {
-      busqueda.NombreApellido = {
+      where.NombreApellido = {
           [Op.like]: "%" + req.query.NombreApellido + "%",
         };
   }
@@ -24,7 +24,7 @@ router.get("/clientes", async function (req, res, next) {
         "Documento",
       ],
       order: [["id", "ASC"]],
-      busqueda,
+      where,
     });
   
     return res.json({ Items: rows, RegistrosTotal: count });

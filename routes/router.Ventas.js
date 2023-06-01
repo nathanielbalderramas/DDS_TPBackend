@@ -8,7 +8,16 @@ const { Op, ValidationError } = require("sequelize");
 
 router.get("/ventas", async function (req, res, next) {
   try {
-      const ventas = await db.Venta.findAll();
+      const ventas = await db.Venta.findAll({
+        attributes: [
+          "id",
+          "Vehiculo",
+          "Fecha",
+          "Cliente",
+          "Estado",
+    ],
+    order: [["id", "DESC"]],
+  });
       res.status(200).json(ventas);
   } catch (error) {
       res.status(500).json(error);

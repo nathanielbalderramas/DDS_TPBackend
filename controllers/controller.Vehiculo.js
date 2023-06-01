@@ -36,7 +36,7 @@ const getVehiculos = async function (req, res, next) {
         order: [["FechaIngreso", "DESC"]],
         where,
     });
-
+    
     return res.json({ Items: rows, RegistrosTotal: count });
 }
 
@@ -158,7 +158,7 @@ const deleteVehiculo = async (req, res) => {
 const makeVehiculos = async (req, res, next) => {
     try {
         const Vehiculos = await db.Vehiculo.bulkCreate([
-            {  Marca: 1, Modelo: "Punto 1.8", Patente: 'JEQ510', FechaIngreso: '2010-01-19', Valor: 10000, Estado: 1, }
+            { Marca: 1, Modelo: "Punto 1.8", Patente: 'JEQ510', FechaIngreso: '2010-01-19', Valor: 10000, Estado: 1, }
         ],);
         res.status(200).json(Vehiculos);
     } catch (error) {

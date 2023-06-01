@@ -1,7 +1,4 @@
 const { DataTypes } = require("sequelize");
-
-const { Model, DataTypes } = require("sequelize");
-const {db} = require("./db-link");
 /*
             `CREATE table Ventas( 
                 id INTEGER PRIMARY KEY AUTOINCREMENT

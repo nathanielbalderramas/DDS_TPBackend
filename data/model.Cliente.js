@@ -25,7 +25,7 @@ module.exports = function (db) {
                 validate: {
                     notEmpty: {
                         args: true,
-                        msg: "Modelo es requerido",
+                        msg: "Nombre y Apellido es requerido",
                     },
                     len: {
                         args: [3, 100],
@@ -39,7 +39,7 @@ module.exports = function (db) {
                 validate: {
                     notEmpty: {
                         args: true,
-                        msg: "Modelo es requerido",
+                        msg: "EL numero de Documento es requerido",
                     },
                     len: {
                         args: [8, 11],
