@@ -3,6 +3,7 @@ const router = express.Router();
 // const db = require("../data/db-init")
 const {
     getMarcas,
+    getMarca,
     makeMarcas
 } = require("../controllers/controller.Marca")
 

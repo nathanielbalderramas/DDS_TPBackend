@@ -1,24 +1,31 @@
-const { Marca } = require("../data/db-link")
+const db = require("../data/db-link");
+
 
 const getMarcas = async (req, res, next)=> {
     try {
-        const marcas = await Marca.findAll();
+        const marcas = await db.Marca.findAll({
+            attributes: [
+              "id",
+              "Nombre"
+        ],
+    });
         res.status(200).json(marcas);
     } catch (error) {
         res.status(500).json(error);
     }
 }
 
-const getMarca = async (marcaRecibida, res) => {
-    let busqueda = {};
-    busqueda.id = marcaRecibida;
+const getMarca = async ( req, res, next) => {
+    let where = {};
+    
     try {
         const sendMarca = await db.Marca.findAll({
             attributes: [
-              "Nombre"
+                "id",
+                "Nombre"
             ],
-            busqueda,
-          });;
+            where,
+          });
         res.status(200).json(sendMarca);
     } catch (error) {
         res.status(500).json(error);

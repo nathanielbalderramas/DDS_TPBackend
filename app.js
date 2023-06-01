@@ -20,7 +20,7 @@ const options = {
 };
 const openapiSpecification = swaggerJsdoc(options);
 
-// require("./data/sqlite-init"); //Crea la Base si no Existe 
+require("./data/sqlite-init"); //Crea la Base si no Existe 
 
 
 // utilities
@@ -40,7 +40,13 @@ const alquileresRoutes = require("./routes/router.Alquileres")
 app.use("/api", alquileresRoutes)
 
 const vehiculosRoutes = require("./routes/router.Vehiculos")
-app.use("/api", vehiculosRoutes)
+app.use("/api", vehiculosRoutes);
+
+const ventasRoutes = require("./routes/router.Ventas")
+app.use("/api", ventasRoutes);
+
+const clientesRoutes = require("./routes/router.Clientes")
+app.use("/api", clientesRoutes);
 
 //...
 

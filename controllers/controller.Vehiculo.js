@@ -1,19 +1,164 @@
-const { Vehiculo } = require("../data/db-init")
+const db = require("../data/db-link");
+const express = require('express');
+const { Op, ValidationError } = require("sequelize");
+
+const getVehiculos = async function (req, res, next) {
+    let where = {};
+
+    //Busqueda por Marca
+    if (req.query.Marca != undefined && req.query.Marca !== "") {
+        where.Marca = req.query.Marca;
+    }
+
+    //Busqueda por Modelo
+    if (req.query.Modelo != undefined && req.query.Modelo !== "") {
+        where.Modelo = {
+            [Op.like]: "%" + req.query.Modelo + "%",
+        };
+    }
+
+    //Busqueda por Estado de Vehiculos
+    if (req.query.Estado != undefined && req.query.Estado !== "") {
+        where.Estado = req.query.Estado;
+    }
+
+    //Devuele la consulta 
+    const { count, rows } = await db.Vehiculo.findAndCountAll({
+        attributes: [
+            "IdVehiculo",
+            "Marca",
+            "Modelo",
+            "Patente",
+            "FechaIngreso",
+            "Valor",
+            "Estado"
+        ],
+        order: [["FechaIngreso", "DESC"]],
+        where,
+    });
+    
+    return res.json({ Items: rows, RegistrosTotal: count });
+}
+
+
+
+const getVehiculo = async (req, res, next) => {
+    let items = await db.Vehiculo.findOne({
+        attributes: [
+            "IdVehiculo",
+            "Marca",
+            "Modelo",
+            "Patente",
+            "FechaIngreso",
+            "Valor",
+            "Estado",
+        ],
+        where: { IdVehiculo: req.params.id },
+    });
+    res.json(items);
+};
+
+const postVehiculos = async (req, res) => {
+    try {
+        let data = await db.Vehiculo.create({
+            Marca: req.body.Marca,
+            Modelo: req.body.Modelo,
+            Patente: req.body.Patente,
+            Valor: req.body.Valor,
+            FechaIngreso: req.body.FechaIngreso,
+            Estado: 1,
+        });
+        res.status(200).json(data.dataValues); // devolvemos el registro agregado!
+    } catch (err) {
+        if (err instanceof ValidationError) {
+            // si son errores de validacion, los devolvemos
+            let messages = '';
+            err.errors.forEach((x) => messages += (x.path ?? 'campo') + ": " + x.message + '\n');
+            res.status(400).json({ message: messages });
+        } else {
+            // si son errores desconocidos, los dejamos que los controle el middleware de errores
+            throw err;
+        }
+    }
+};
+
+const putVehiculo = async (req, res) => {
+    try {
+        let item = await db.Vehiculo.findOne({
+            attributes: [
+                "IdVehiculo",
+                "Marca",
+                "Modelo",
+                "Patente",
+                "FechaIngreso",
+                "Valor",
+                "Estado",
+            ],
+            where: { IdVehiculo: req.params.id },
+        });
+        if (!item) {
+            res.status(404).json({ message: "Vehiculo no encontrado" });
+            return;
+        }
+        item.Modelo = req.body.Modelo;
+        item.Marca = req.body.Marca;
+        item.Patente = req.body.Patente;
+        item.Valor = req.body.Valor;
+        item.FechaIngreso = req.body.FechaIngreso;
+        await item.save();
+
+        res.sendStatus(200);
+    } catch (err) {
+        if (err instanceof ValidationError) {
+            // si son errores de validacion, los devolvemos
+            let messages = '';
+            err.errors.forEach((x) => messages += x.path + ": " + x.message + '\n');
+            res.status(400).json({ message: messages });
+        } else {
+            // si son errores desconocidos, los dejamos que los controle el middleware de errores
+            throw err;
+        }
+    }
+};
+
+const deleteVehiculo = async (req, res) => {
+    // baja logica
+    try {
+        let data = await db.Vehiculo.findOne({
+            attributes: [
+                "IdVehiculo",
+                "Marca",
+                "Modelo",
+                "Patente",
+                "FechaIngreso",
+                "Valor",
+                "Estado",
+            ],
+            where: { IdVehiculo: req.params.id },
+        });
+        if (!data) {
+            res.status(404).json({ message: "Vehiculo no encontrado" });
+            return;
+        }
+        data.Estado = 0;
+        await data.save();
+        res.sendStatus(200);
+    } catch (err) {
+        if (err instanceof ValidationError) {
+            // si son errores de validacion, los devolvemos
+            const messages = err.errors.map((x) => x.message);
+            res.status(400).json(messages);
+        } else {
+            // si son errores desconocidos, los dejamos que los controle el middleware de errores
+            throw err;
+        }
+    }
+};
 
 const makeVehiculos = async (req, res, next) => {
     try {
-        console.log();
-        const Vehiculos = await Vehiculo.bulkCreate([
-            {IdVehiculo: 1, Marca:1 ,Modelo: "Punto 1.8", Patente: 'JEQ550',FechaIngreso: '2010-01-19', Valor: 10000, Estado: 1, },
-            {IdVehiculo: 2,Marca:10 ,Modelo:"GOL 1.6", Patente:'AA212XC', Valor:15000,FechaIngreso:'2016-02-10', Estado:1, },
-            {IdVehiculo: 3,Marca:6 ,Modelo: "FOCUS 1.8",Patente: 'HWE340', Valor:12000,FechaIngreso:'2013-02-28', Estado:1, },
-            {IdVehiculo: 4,Marca:5 ,Modelo: "Punto 1.4",Patente: 'JPQ450', Valor:10000,FechaIngreso:'2015-01-11',Estado: 1, },
-            {IdVehiculo: 5,Marca:6 ,Modelo: "FIESTA", Patente:'PLE145', Valor:10000,FechaIngreso:'2014-07-10', Estado:1, },
-            {IdVehiculo: 6,Marca:5 ,Modelo: "SIENA", Patente:'AE323RE', Valor:10000,FechaIngreso:'2022-03-12',Estado: 1, },
-            {IdVehiculo: 7,Marca:1 ,Modelo: "A3", Patente:'AH434SE', Valor:10000,FechaIngreso:'2023-06-13',Estado: 1, },
-            {IdVehiculo: 8,Marca:6 ,Modelo: "RANGER", Patente:'JTR852', Valor:10000,FechaIngreso:'2021-05-23', Estado:1, },
-            {IdVehiculo: 9,Marca:5 ,Modelo: "KANGOO", Patente:'OVY213', Valor:10000,FechaIngreso:'2020-03-07',Estado: 1, },
-            {IdVehiculo: 10,Marca:10 , Modelo: "BORA 1.8",Patente: 'JIJ090', Valor:12000,FechaIngreso:'2015-02-01',Estado: 1, },
+        const Vehiculos = await db.Vehiculo.bulkCreate([
+            { Marca: 1, Modelo: "Punto 1.8", Patente: 'JEQ510', FechaIngreso: '2010-01-19', Valor: 10000, Estado: 1, }
         ],);
         res.status(200).json(Vehiculos);
     } catch (error) {
@@ -22,5 +167,10 @@ const makeVehiculos = async (req, res, next) => {
 }
 
 module.exports = {
-    makeVehiculos
+    makeVehiculos,
+    getVehiculos,
+    getVehiculo,
+    postVehiculos,
+    putVehiculo,
+    deleteVehiculo
 };
