@@ -15,7 +15,8 @@ const db = new Sequelize({
     dialect:  process.env.DIALECT, 
     storage: process.env.DATABASE, 
     user: process.env.USER, 
-    password: process.env.PASSWORD
+    password: process.env.PASSWORD,
+    logging: false,
 })
 
 const Marca = initMarca(db);
@@ -32,7 +33,7 @@ async function check_db(db) {
     // Authentication
     try {
         await db.authenticate();
-        console.log("Authentications succesfull!")
+        // console.log("Authentications succesfull!")
     } catch (error) {
         console.log("Authentications Failed!")
         console.error(error);
@@ -42,7 +43,7 @@ async function check_db(db) {
     // Sync
     try {
         await db.sync();
-        console.log("Sync succesfull!");
+        // console.log("Sync succesfull!");
     } catch (error) {
         console.log("Sync Failed!");
         console.error(error);
