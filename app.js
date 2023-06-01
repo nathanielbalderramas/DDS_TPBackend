@@ -37,10 +37,16 @@ const marcasRouter = require("./routes/router.Marcas");
 app.use("/api", marcasRouter);
 
 const alquileresRouter = require("./routes/router.Alquileres")
-app.use("/api", alquileresRouter)
+app.use("/api", alquileresRouter);
 
 const vehiculosRoutes = require("./routes/router.Vehiculos")
-app.use("/api", vehiculosRoutes)
+app.use("/api", vehiculosRoutes);
+
+const ventasRoutes = require("./routes/router.Ventas")
+app.use("/api", ventasRoutes);
+
+const clientesRoutes = require("./routes/router.Clientes")
+app.use("/api", clientesRoutes);
 
 //...
 
