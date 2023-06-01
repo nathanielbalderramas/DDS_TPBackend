@@ -20,7 +20,7 @@ const options = {
 };
 const openapiSpecification = swaggerJsdoc(options);
 
-// require("./data/sqlite-init"); //Crea la Base si no Existe 
+require("./data/sqlite-init"); //Crea la Base si no Existe 
 
 
 // utilities

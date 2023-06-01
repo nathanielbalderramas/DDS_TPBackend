@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
-const { Vehiculo } = require("./db-link");
+
 /*
 const {db} = require("./db-link");
-const { Alquiler } = require("./model.Alquiler");
+const { Vehiculo } = require("./model.Vehiculo");
 */
 
 module.exports = function (db) {

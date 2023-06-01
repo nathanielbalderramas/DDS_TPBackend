@@ -1,15 +1,15 @@
 const db = require("aa-sqlite");
 
 async function CrearBasesSiNoExiste() {
+    await db.open("./data/data.db");
     CrearBaseMarcas();
-    CrearBaseVehiculos();
     CrearBaseEstadoVehiculos();
-    
+    CrearBaseVehiculos();
+    db.close();
 }
 
 async function CrearBaseVehiculos() {
     // abrir base, si no existe el archivo/base lo crea
-    await db.open("./data/data.db");
 
     let existe = false;
     let res = null;
@@ -27,6 +27,8 @@ async function CrearBaseVehiculos() {
               , Valor real
               , FechaIngreso text
               , Estado INTEGER 
+              , FOREIGN KEY (Marca) REFERENCES Marcas(id)
+              , FOREIGN KEY (Estado) REFERENCES EstadoVehiculo(id)
               );`
         );
         console.log("tabla Vehiculos creada!");
@@ -42,18 +44,14 @@ async function CrearBaseVehiculos() {
             (7, 1 ,"A3", 'AH434SE',10000,'2023-06-13', 1 ),
             (8, 6 ,"RANGER", 'JTR852',10000,'2021-05-23', 1 ),
             (9, 5 ,"KANGOO", 'OVY213',10000,'2020-03-07', 1 ),
-            (10, 10 ,"BORA 1.8", 'JIJ090',12000,'2015-02-01', 1 ),
+            (10, 10 ,"BORA 1.8", 'JIJ090',12000,'2015-02-01', 1 )
       ;`
         );
     }
-
-    // cerrar la base
-    db.close();
 }
 
 async function CrearBaseEstadoVehiculos() {
     // abrir base, si no existe el archivo/base lo crea
-    await db.open("./data/data.db");
 
     let existe = false;
     let res = null;
@@ -76,18 +74,15 @@ async function CrearBaseEstadoVehiculos() {
             (1, "Disponible"),
             (2, "Alquilado"),
             (3, "Vendido"),
-            (4, "En Reparacion"),
+            (4, "En Reparacion")
       ;`
         );
     }
 
-    // cerrar la base
-    db.close();
 }
 
 async function CrearBaseMarcas() {
     // abrir base, si no existe el archivo/base lo crea
-    await db.open("./data/data.db");
 
     let existe = false;
     let res = null;
@@ -115,16 +110,15 @@ async function CrearBaseMarcas() {
             (7, "Ford"),
             (8, "Honda"),
             (9, "Hyundai"),
-            (10, "VW"),
+            (10, "VW")
       ;`
         );
     }
 
-    // cerrar la base
-    db.close();
 }
 
 
 CrearBasesSiNoExiste();
 
 module.exports = CrearBasesSiNoExiste;
+
