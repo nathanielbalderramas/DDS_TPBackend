@@ -13,4 +13,7 @@ check_db(db);
 
 const app = require("./app");
 const port = process.env.port || 4000;
-server = app.listen(port);
+
+app.listen(port, () => {
+    console.log(`sitio escuchando en el puerto ${port}`);
+});

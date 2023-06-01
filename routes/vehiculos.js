@@ -1,9 +1,12 @@
-const express = require("express");
+//Octavio Escudero 3k4 89866
+
+const db = require("../data/db-link");
+const express = require('express');
 const router = express.Router();
-const db = require("../base-orm/sequelize-init");
+const { makeVehiculos } = require("../controllers/controller.Vehiculo");
 const { Op, ValidationError } = require("sequelize");
 
-router.get("/api/autos", async function (req, res, next) {
+router.get("/vehiculos", async function (req, res, next) {
   let busqueda = {};
   if (req.query.Marca != undefined && req.query.Marca !== "") {
     busqueda.Marca = {
@@ -15,9 +18,9 @@ router.get("/api/autos", async function (req, res, next) {
         [Op.like]: "%" + req.query.Modelo + "%",
       };
 }
-  const { count, rows } = await db.Autos.findAndCountAll({
+  const { count, rows } = await db.Vehiculo.findAndCountAll({
     attributes: [
-      "IdAuto",
+      "IdVehiculo",
       "Marca",
       "Modelo",
       "Patente",
@@ -32,25 +35,30 @@ router.get("/api/autos", async function (req, res, next) {
   return res.json({ Items: rows, RegistrosTotal: count });
 });
 
-router.get("/api/autos/:id", async function (req, res, next) {
-  let items = await db.Autos.findOne({
+router.get("/vehiculos/make", async function (req, res, next) {
+  makeVehiculos();
+  return res.json("Vehiculos Creados");
+});
+
+router.get("/vehiculos/:id", async function (req, res, next) {
+  let items = await db.Vehiculo.findOne({
     attributes: [
-        "IdAuto",
-        "Marca",
-        "Modelo",
-        "Patente",
-        "FechaIngreso",
-        "Valor",
-        "Estado",
+      "IdVehiculo",
+      "Marca",
+      "Modelo",
+      "Patente",
+      "FechaIngreso",
+      "Valor",
+      "Estado",
     ],
-    where: { IdAuto: req.params.id },
+    where: { IdVehiculo: req.params.id },
   });
   res.json(items);
 });
 
-router.post("/api/autos/", async (req, res) => {
+router.post("/vehiculos/", async (req, res) => {
   try {
-    let data = await db.Autos.create({
+    let data = await db.Vehiculo.create({
         Marca: req.body.Marca,
         Modelo: req.body.Modelo,
       Patente: req.body.Patente,
@@ -72,11 +80,11 @@ router.post("/api/autos/", async (req, res) => {
   }
 });
 
-router.put("/api/autos/:id", async (req, res) => {
+router.put("/vehiculos/:id", async (req, res) => {
   try {
-    let item = await db.Autos.findOne({
+    let item = await db.Vehiculo.findOne({
       attributes: [
-        "IdAuto",
+        "IdVehiculo",
       "Marca",
       "Modelo",
       "Patente",
@@ -84,10 +92,10 @@ router.put("/api/autos/:id", async (req, res) => {
       "Valor",
       "Estado",
       ],
-      where: { IdAuto: req.params.id },
+      where: { IdVehiculo: req.params.id },
     });
     if (!item) {
-      res.status(404).json({ message: "Auto no encontrado" });
+      res.status(404).json({ message: "Vehiculo no encontrado" });
       return;
     }
     item.Modelo = req.body.Modelo;
@@ -112,23 +120,13 @@ router.put("/api/autos/:id", async (req, res) => {
   }
 });
 
-router.delete("/api/autos/:id", async (req, res) => {
-  let bajaFisica = false;
-
-  if (bajaFisica) {
-    // baja fisica
-    let filasBorradas = await db.Autos.destroy({
-      where: { IdAuto: req.params.id },
-    });
-    if (filasBorradas == 1) res.sendStatus(200);
-    else res.sendStatus(404);
-  } else {
+router.delete("/vehiculos/:id", async (req, res) => {
     // baja logica
     try {
       let data = await db.sequelize.query(
-        "UPDATE Autos SET Estado = case when Estado 1 =  then 0 else 1 end WHERE IdAuto = :IdAuto",
+        "UPDATE Vehiculo SET Estado = case when Estado 1 =  then 0 else 1 end WHERE IdVehiculo = :IdVehiculo",
         {
-          replacements: { IdAuto: +req.params.id },
+          replacements: { IdVehiculo: +req.params.id },
         }
       );
       res.sendStatus(200);
@@ -143,6 +141,6 @@ router.delete("/api/autos/:id", async (req, res) => {
       }
     }
   }
-});
+);
 module.exports = router;
 

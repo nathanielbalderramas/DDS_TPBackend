@@ -9,6 +9,7 @@ const initVehiculo = require("./model.Vehiculo");
 const initAlquiler = require("./model.Alquiler");
 const initReparacion = require("./model.Reparacion")
 const initVenta = require("./model.Venta")
+const initEstadoVehiculo = require("./model.EstadoVehiculo")
 
 touch_db();
 const db = new Sequelize({
@@ -23,6 +24,7 @@ const Vehiculo = initVehiculo(db);
 const Alquiler = initAlquiler(db);
 const Reparacion = initReparacion(db);
 const Venta = initVenta(db);
+const EstadoVehiculo = initEstadoVehiculo(db);
 
 Vehiculo.hasOne(Alquiler, {foreignKey: "IdVehiculo"})
 
@@ -57,4 +59,5 @@ module.exports = {
     Alquiler: Alquiler,
     Reparacion: Reparacion,
     Venta: Venta,
+    EstadoVehiculo: EstadoVehiculo,
 };

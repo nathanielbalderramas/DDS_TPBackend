@@ -9,7 +9,7 @@ module.exports = function (db) {
     const Vehiculo = db.define(
         "Vehiculo",
         {
-            IDVehiculo: {
+            IdVehiculo: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
                 autoIncrement: true,
