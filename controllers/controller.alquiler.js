@@ -1,5 +1,9 @@
 const { Alquiler, Vehiculo } = require("../data/db-link")
 
+function parseDate (yyyy_mm_dd_string) {
+    return new Date(...yyyy_mm_dd_string.split("-"));
+}
+
 function randomDate () {
     let year = 2001 + Math.floor(Math.random() * 22);
     let month = 1 + Math.floor(Math.random() * 12);
@@ -41,17 +45,20 @@ const getAlquileresById = async (req, res, next) => {
 
 const postAlquileres = async (req, res, next) => {
     try {
+        if (! ("FechaInicio" in req.body)) {
+            res.status(500).json("Alquiler parameter are required").end();
+        }
         const inputParams = {
-            FechaInicio: req.params.FechaInicio,
-            FechaFin: req.params.FechaFin,
-            FechaFinReal: req.params.FechaFinReal || null,
-            Monto: req.params.Monto,
-            IdVehiculo: req.params.IdVehiculo,
+            FechaInicio: parseDate(req.body.FechaInicio),
+            FechaFin: parseDate(req.body.FechaFin),
+            FechaFinReal: req.body.FechaFinReal ? parseDate(req.body.FechaFinReal) : null,
+            Monto: req.body.Monto,
+            IdVehiculo: req.body.IdVehiculo,
         };
         const alquiler = await Alquiler.create(inputParams);
-        res.status(200) ;
+        res.status(200).json(alquiler).end() ;
     } catch (error) {
-        res.status(500);
+        res.status(500).json(error);
     }
 }
 

@@ -40,7 +40,21 @@ router.get("/alquileres", getAlquileres);
  *          description: Something wrong happened.
  */
 router.get("/alquileres/:idAlquiler", getAlquileresById);
+
+/**
+ * @openapi
+ * /api/alquileres:
+ *   post:
+ *     description: should inseert a single record of Alquiler.
+ *     responses:
+ *       200:
+ *         description: Succesfully inserts a single record of Alquiler and returns it.
+ *       500:
+ *          description: Something wrong happened.
+ */
 router.post("/alquileres", postAlquileres);
+
+
 router.put("/alquileres", putAlquileres);
 router.delete("/alquileres", deleteAlquileres);
 

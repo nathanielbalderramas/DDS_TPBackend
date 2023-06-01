@@ -7,7 +7,7 @@ const { Vehiculo } = require("./model.Vehiculo");
 
 function calcularEstado(fechaInicio, fechaFin, fechaFinReal) {
     if (fechaFinReal == null && fechaInicio < fechaFin) {return "En Curso"}
-    else if (fechaFinReal == null && fechaFin < new Date()) {return "En mora"}
+    else if (fechaFinReal == null && fechaFin < new Date()) {return "En Mora"}
     else if (fechaFinReal !== null && fechaFinReal <= fechaFin) {return "Finalizado"}
     else if (fechaFinReal !== null && fechaFinReal > fechaFin) {return "Finalzado con demora"}
 }
@@ -23,11 +23,11 @@ module.exports = function ( db ) {
             autoIncrement: true,
             },
         FechaInicio: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             allowNull: false,
             },
         FechaFin: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             allowNull: false,
             validate: {
                 esPosteriorAFechaInicio(value) {

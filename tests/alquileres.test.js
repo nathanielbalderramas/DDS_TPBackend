@@ -39,3 +39,20 @@ describe("GET /api/alquileres", () => {
     });
   }); 
   
+  describe("GET /api/alquileres/:id", () => {
+    it("should return a specific alquiler", async () => {
+      const res = await request(app).get("/api/alquileres/4");
+      expect(res.statusCode).toBe(200);
+      expect(res.body.length).toBeGreaterThan(0);
+      expect(res.body[0]).toHaveProperty("Estado");
+      expect(res.body[0].Estado).toBe("Finalizado");
+      expect(res.body[0]).toHaveProperty("FechaInicio");
+      expect(res.body[0].FechaInicio).toBe("2010-04-25");
+      expect(res.body[0]).toHaveProperty("FechaFin");
+      expect(res.body[0].FechaFin).toBeDefined();
+      expect(res.body[0]).toHaveProperty("FechaFinReal");
+      expect(res.body[0]).toHaveProperty("IdVehiculo");
+      expect(res.body[0].IdVehiculo).toBeDefined();
+
+    });
+  }); 
