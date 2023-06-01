@@ -15,18 +15,14 @@ module.exports = function (db) {
                 autoIncrement: true,
             },
             Marca: {
-                type: DataTypes.STRING(60),
+                type: DataTypes.INTEGER,
                 allowNull: false,
                 validate: {
-                    notEmpty: {
+                    notNull: {
                         args: true,
                         msg: "Marca es requerido",
-                    },
-                    len: {
-                        args: [3, 60],
-                        msg: "Marca debe ser tipo carateres, entre 3 y 60 de longitud",
-                    },
-                },
+                    }
+                }
             },
             Modelo: {
                 type: DataTypes.STRING(60),
