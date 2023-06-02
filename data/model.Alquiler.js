@@ -6,10 +6,10 @@ const { Vehiculo } = require("./model.Vehiculo");
 */
 
 function calcularEstado(fechaInicio, fechaFin, fechaFinReal) {
-    if (fechaFinReal == null && fechaInicio < fechaFin) {return "En Curso"}
-    else if (fechaFinReal == null && fechaFin < new Date()) {return "En Mora"}
+    if (fechaFinReal == null && fechaFin < (new Date()).toISOString().split("T")[0]) {return "En Mora"}
+    else if (fechaFinReal == null && fechaInicio < fechaFin) {return "En Curso"}
     else if (fechaFinReal !== null && fechaFinReal <= fechaFin) {return "Finalizado"}
-    else if (fechaFinReal !== null && fechaFinReal > fechaFin) {return "Finalzado con demora"}
+    else if (fechaFinReal !== null && fechaFinReal > fechaFin) {return "Finalizado Con Demora"}
 }
 
 

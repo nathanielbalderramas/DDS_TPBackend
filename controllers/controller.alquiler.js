@@ -1,9 +1,5 @@
 const { Alquiler, Vehiculo } = require("../data/db-link")
 
-function parseDate (yyyy_mm_dd_string) {
-    return new Date(...yyyy_mm_dd_string.split("-"));
-}
-
 function randomDate () {
     let year = 2001 + Math.floor(Math.random() * 22);
     let month = 1 + Math.floor(Math.random() * 12);
@@ -49,9 +45,9 @@ const postAlquileres = async (req, res, next) => {
             res.status(500).json("Alquiler parameter are required").end();
         }
         const inputParams = {
-            FechaInicio: parseDate(req.body.FechaInicio),
-            FechaFin: parseDate(req.body.FechaFin),
-            FechaFinReal: req.body.FechaFinReal ? parseDate(req.body.FechaFinReal) : null,
+            FechaInicio: req.body.FechaInicio,
+            FechaFin: req.body.FechaFin,
+            FechaFinReal: req.body.FechaFinReal ? req.body.FechaFinReal : null,
             Monto: req.body.Monto,
             IdVehiculo: req.body.IdVehiculo,
         };
@@ -84,16 +80,16 @@ const randomMakeAlquileres = async (req, res, next) => {
     try {
         console.log()
         const alquileres = await Alquiler.bulkCreate([
-            {IdVehiculo: 1, FechaInicio: new Date(randomDate()), FechaFin: new Date(randomDate()), Monto: randomMonto(), },
-            {IdVehiculo: 1, FechaInicio: new Date(randomDate()), FechaFin: new Date(randomDate()), Monto: randomMonto(), },
-            {IdVehiculo: 1, FechaInicio: new Date(randomDate()), FechaFin: new Date(randomDate()), Monto: randomMonto(), },
-            {IdVehiculo: 1, FechaInicio: new Date(randomDate()), FechaFin: new Date(randomDate()), Monto: randomMonto(), },
-            {IdVehiculo: 1, FechaInicio: new Date(randomDate()), FechaFin: new Date(randomDate()), Monto: randomMonto(), },
-            {IdVehiculo: 1, FechaInicio: new Date(randomDate()), FechaFin: new Date(randomDate()), Monto: randomMonto(), },
-            {IdVehiculo: 1, FechaInicio: new Date(randomDate()), FechaFin: new Date(randomDate()), Monto: randomMonto(), },
-            {IdVehiculo: 1, FechaInicio: new Date(randomDate()), FechaFin: new Date(randomDate()), Monto: randomMonto(), },
-            {IdVehiculo: 1, FechaInicio: new Date(randomDate()), FechaFin: new Date(randomDate()), Monto: randomMonto(), },
-            {IdVehiculo: 1, FechaInicio: new Date(randomDate()), FechaFin: new Date(randomDate()), Monto: randomMonto(), },
+            {IdVehiculo: 1, FechaInicio: randomDate(), FechaFin: randomDate(), Monto: randomMonto(), },
+            {IdVehiculo: 1, FechaInicio: randomDate(), FechaFin: randomDate(), Monto: randomMonto(), },
+            {IdVehiculo: 1, FechaInicio: randomDate(), FechaFin: randomDate(), Monto: randomMonto(), },
+            {IdVehiculo: 1, FechaInicio: randomDate(), FechaFin: randomDate(), Monto: randomMonto(), },
+            {IdVehiculo: 1, FechaInicio: randomDate(), FechaFin: randomDate(), Monto: randomMonto(), },
+            {IdVehiculo: 1, FechaInicio: randomDate(), FechaFin: randomDate(), Monto: randomMonto(), },
+            {IdVehiculo: 1, FechaInicio: randomDate(), FechaFin: randomDate(), Monto: randomMonto(), },
+            {IdVehiculo: 1, FechaInicio: randomDate(), FechaFin: randomDate(), Monto: randomMonto(), },
+            {IdVehiculo: 1, FechaInicio: randomDate(), FechaFin: randomDate(), Monto: randomMonto(), },
+            {IdVehiculo: 1, FechaInicio: randomDate(), FechaFin: randomDate(), Monto: randomMonto(), },
         ]);
         res.status(500).json(alquileres)
     } catch (error) {
