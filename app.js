@@ -33,11 +33,11 @@ const customRouter = require("./pathTo/customRouter");
 app.use("/customRoute", customRouter);
 */
 
-const marcasRouter = require("./routes/router.Marcas");
-app.use("/api", marcasRouter);
+const marcasRoutes = require("./routes/router.Marcas");
+app.use("/api", marcasRoutes);
 
-const alquileresRouter = require("./routes/router.Alquileres")
-app.use("/api", alquileresRouter);
+const alquileresRoutes = require("./routes/router.Alquileres")
+app.use("/api", alquileresRoutes)
 
 const vehiculosRoutes = require("./routes/router.Vehiculos")
 app.use("/api", vehiculosRoutes);
