@@ -1,5 +1,19 @@
+// allows acces to enviroment variables in proces.env
+require('dotenv').config() 
+
 const request = require("supertest");
-const app = require("../routes/router.Vehiculos");
+const app = require("../app");
+
+// Levanta el servidor antes de empezar a testear
+beforeAll(()=>{
+  server = app.listen(4020)
+});
+
+// Cierra el servidor despues de testear
+afterAll(()=>{
+  server.close()
+});
+
 function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
   }
