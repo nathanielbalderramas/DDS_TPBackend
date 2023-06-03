@@ -1,16 +1,5 @@
 const { Alquiler, Vehiculo } = require("../data/db-link")
 
-function randomDate () {
-    let year = 2001 + Math.floor(Math.random() * 22);
-    let month = 1 + Math.floor(Math.random() * 12);
-    let day = 1 + Math.floor(Math.random() * 30);
-    if (month == 2 && day > 28) {day = 28}
-    return `${year}-${month}-${day}`}
-
-function randomMonto () {
-    return Math.floor(Math.random()*2000 + Math.random()*100000 + 20000) 
-}
-
 const getAlquileres = async (req, res, next) => {
     try {
         const alquileres = await Alquiler.findAll();
@@ -76,27 +65,27 @@ const deleteAlquileres = async (req, res, next) => {
 }
 
 
-const randomMakeAlquileres = async (req, res, next) => {
+const mockMakeAlquileres = async (req, res, next) => {
     try {
-        console.log()
         const alquileres = await Alquiler.bulkCreate([
-            {IdVehiculo: 1, FechaInicio: randomDate(), FechaFin: randomDate(), Monto: randomMonto(), },
-            {IdVehiculo: 1, FechaInicio: randomDate(), FechaFin: randomDate(), Monto: randomMonto(), },
-            {IdVehiculo: 1, FechaInicio: randomDate(), FechaFin: randomDate(), Monto: randomMonto(), },
-            {IdVehiculo: 1, FechaInicio: randomDate(), FechaFin: randomDate(), Monto: randomMonto(), },
-            {IdVehiculo: 1, FechaInicio: randomDate(), FechaFin: randomDate(), Monto: randomMonto(), },
-            {IdVehiculo: 1, FechaInicio: randomDate(), FechaFin: randomDate(), Monto: randomMonto(), },
-            {IdVehiculo: 1, FechaInicio: randomDate(), FechaFin: randomDate(), Monto: randomMonto(), },
-            {IdVehiculo: 1, FechaInicio: randomDate(), FechaFin: randomDate(), Monto: randomMonto(), },
-            {IdVehiculo: 1, FechaInicio: randomDate(), FechaFin: randomDate(), Monto: randomMonto(), },
-            {IdVehiculo: 1, FechaInicio: randomDate(), FechaFin: randomDate(), Monto: randomMonto(), },
-        ]);
-        res.status(500).json(alquileres)
+            {IdVehiculo: 1, FechaInicio: "2023-05-02", FechaFin: "3023-05-02", FechaFinReal: null, Monto: 93300, },
+            {IdVehiculo: 1, FechaInicio: "2023-05-03", FechaFin: "3023-05-03", FechaFinReal: null, Monto: 124100, },
+            {IdVehiculo: 1, FechaInicio: "2023-05-04", FechaFin: "3023-05-04", FechaFinReal: null, Monto: 43000, },
+            {IdVehiculo: 1, FechaInicio: "2023-05-01", FechaFin: "2023-05-21", FechaFinReal: null, Monto: 86100, },
+            {IdVehiculo: 1, FechaInicio: "2023-05-02", FechaFin: "2023-05-22", FechaFinReal: null, Monto: 53000, },
+            {IdVehiculo: 1, FechaInicio: "2023-05-03", FechaFin: "2023-05-23", FechaFinReal: null, Monto: 49900, },
+            {IdVehiculo: 1, FechaInicio: "2008-05-08", FechaFin: "2008-05-18", FechaFinReal: "2008-05-17", Monto: 62600, },
+            {IdVehiculo: 1, FechaInicio: "2014-09-04", FechaFin: "2014-09-09", FechaFinReal: "2014-09-09", Monto: 74700, },
+            {IdVehiculo: 1, FechaInicio: "2022-05-06", FechaFin: "2022-05-16", FechaFinReal: "2022-05-16", Monto: 76500, },
+            {IdVehiculo: 1, FechaInicio: "2003-07-07", FechaFin: "2003-08-07", FechaFinReal: "2003-08-08", Monto: 113500, },
+            {IdVehiculo: 1, FechaInicio: "2022-05-06", FechaFin: "2022-05-16", FechaFinReal: "2023-05-16", Monto: 76500, },
+            {IdVehiculo: 1, FechaInicio: "2023-05-01", FechaFin: "2023-06-05", FechaFinReal: "2023-07-05", Monto: 85800, },
+        ], {validate: true});
+        res.status(200).json(alquileres)
     } catch (error) {
         res.status(500).json(error)
     }
 }
-
 
 // This is only for dev purposes. Must be eliminated once Vehiculo is implemented!
 
@@ -116,6 +105,6 @@ module.exports = {
     postAlquileres,
     putAlquileres,
     deleteAlquileres,
-    randomMakeAlquileres,
+    mockMakeAlquileres,
     makeUnVehiculoFalso, // must be removed once Vehiculo is implemented
 }

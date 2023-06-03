@@ -31,7 +31,7 @@ module.exports = function ( db ) {
             allowNull: false,
             validate: {
                 esPosteriorAFechaInicio(value) {
-                    if (Date.parse(value) <= Date.parse(this.FechaInicio)) {
+                    if (value < this.FechaInicio) {
                     throw new Error('FechaFin debe ser posterior a FechaInicio');
                         }
                     }
@@ -42,7 +42,7 @@ module.exports = function ( db ) {
                 allowNull: true,
                 validate: {
                     esPosteriorAFechaInicio(value) {
-                        if (Date.parse(value) <= Date.parse(this.FechaInicio)) {
+                        if (value < this.FechaInicio) {
                         throw new Error('FechaFinReal debe ser posterior a FechaInicio');
                         }
                     }

@@ -6,7 +6,8 @@ const {
     postAlquileres,
     putAlquileres,
     deleteAlquileres,
-    randomMakeAlquileres, 
+    randomMakeAlquileres,
+    mockMakeAlquileres, 
     makeUnVehiculoFalso 
 } = require("../controllers/controller.alquiler");
 
@@ -58,7 +59,7 @@ router.post("/alquileres", postAlquileres);
 router.put("/alquileres", putAlquileres);
 router.delete("/alquileres", deleteAlquileres);
 
-router.get("/randomdata/alquileres", randomMakeAlquileres);
+router.get("/mockdata/alquileres", mockMakeAlquileres);
 router.get("/randomdata/vehiculoFalso", makeUnVehiculoFalso)
 
 
