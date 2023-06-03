@@ -40,7 +40,7 @@ router.get("/alquileres", getAlquileres);
  *       500:
  *          description: Something wrong happened.
  */
-router.get("/alquileres/:idAlquiler", getAlquileresById);
+router.get("/alquileres/:id", getAlquileresById);
 
 /**
  * @openapi
@@ -55,9 +55,35 @@ router.get("/alquileres/:idAlquiler", getAlquileresById);
  */
 router.post("/alquileres", postAlquileres);
 
-
+/**
+ * @openapi
+ * /api/alquileres:
+ *   put:
+ *     description: should modify a single record of Alquiler.
+ *     responses:
+ *       200:
+ *         description: Succesfully modfies a single record of Alquiler and returns it.
+ *       404:
+ *          description: There where no matching records of Alquiler to be found.
+ *       500:
+ *          description: Something wrong happened.
+ */
 router.put("/alquileres", putAlquileres);
-router.delete("/alquileres", deleteAlquileres);
+
+/**
+ * @openapi
+ * /api/alquileres:
+ *   put:
+ *     description: should modify a single record of Alquiler.
+ *     responses:
+ *       200:
+ *         description: Succesfully modfies a single record of Alquiler and returns it.
+ *       404:
+ *          description: There where no matching records of Alquiler to be found.
+ *       500:
+ *          description: Something wrong happened.
+ */
+router.delete("/alquileres/:id", deleteAlquileres);
 
 router.get("/mockdata/alquileres", mockMakeAlquileres);
 router.get("/randomdata/vehiculoFalso", makeUnVehiculoFalso)

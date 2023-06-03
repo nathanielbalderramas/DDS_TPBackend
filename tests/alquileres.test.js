@@ -40,10 +40,11 @@ describe("GET /api/alquileres", () => {
   
   describe("GET /api/alquileres/:id", () => {
     it("should return a specific alquiler", async () => {
-      const res = await request(app).get("/api/alquileres/4");
+      const getRres = await request(app).get("/api/alquileres");
+      const firstObject = getRres.body[0]
+      const res = await request(app).get("/api/alquileres/"+firstObject.IdAlquiler);
       expect(res.statusCode).toBe(200);
       expect(res.body).toEqual(
-        expect.arrayContaining([
           expect.objectContaining({
             Estado: expect.toBeOneOf(["En Curso", "En Mora", "Finalizado", "Finalizado Con Demora"]),
             FechaInicio: expect.any(String),
@@ -52,7 +53,6 @@ describe("GET /api/alquileres", () => {
             Monto: expect.any(Number),
             IdVehiculo: expect.any(Number),
           })
-        ])
       );
     });
   }); 
@@ -69,23 +69,17 @@ const samplePostBody = {
     it("should return the same object we just created", async () => {
       const res = await request(app).post("/api/alquileres").send(samplePostBody);
       expect(res.statusCode).toBe(200);
-      expect(res.body).toEqual(
-//        expect.arrayContaining([
-//          expect.objectContaining({
-{
-            IdAlquiler: expect.any(Number),
-            IdVehiculo: 1,
-            FechaInicio: "2022-10-05",
-            FechaFin: "2022-10-15",
-            FechaFinReal: "2022-10-16",
-            Monto: 47400,
-            Estado: "Finalizado Con Demora",
-            createdAt: expect.any(String),
-            updatedAt: expect.any(String),
-}
-//          })
-//        ])
-      );
+      expect(res.body).toEqual({
+        IdAlquiler: expect.any(Number),
+        IdVehiculo: 1,
+        FechaInicio: "2022-10-05",
+        FechaFin: "2022-10-15",
+        FechaFinReal: "2022-10-16",
+        Monto: 47400,
+        Estado: "Finalizado Con Demora",
+        createdAt: expect.any(String),
+        updatedAt: expect.any(String),
+      });
     });
   }); 
 
@@ -103,20 +97,28 @@ describe("PUT /api/alquileres", () => {
   it("should return the  object with specified modifications", async () => {
     const res = await request(app).put("/api/alquileres").send(samplePutBody);
     expect(res.statusCode).toBe(200);
-    expect(res.body).toEqual(
-{
-          Estado: "Finalizado Con Demora",
-          IdAlquiler: 3,
-          FechaInicio: "2022-10-05",
-          FechaFin: "2022-10-15",
-          FechaFinReal: "2022-10-18",
-          Monto: 50000,
-          IdVehiculo: 1,
-          createdAt: expect.any(String),
-          updatedAt: expect.any(String),
-}
-//          })
-//        ])
-    );
+    expect(res.body).toEqual({
+      Estado: "Finalizado Con Demora",
+      IdAlquiler: 3,
+      FechaInicio: "2022-10-05",
+      FechaFin: "2022-10-15",
+      FechaFinReal: "2022-10-18",
+      Monto: 50000,
+      IdVehiculo: 1,
+      createdAt: expect.any(String),
+      updatedAt: expect.any(String),
+    });
+  });
+}); 
+
+
+
+describe("DELETE /api/alquileres/:id", () => {
+  it("should return the deleted object", async () => {
+    const getRres = await request(app).get("/api/alquileres");
+    const firstObject = getRres.body[0]
+    const res = await request(app).delete("/api/alquileres/"+firstObject.IdAlquiler);
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toEqual(firstObject);
   });
 }); 

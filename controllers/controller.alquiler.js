@@ -6,7 +6,7 @@ const getAlquileres = async (req, res, next) => {
         if (alquileres.length > 0) {
             res.status(200).json(alquileres);
         } else {
-            res.status(404).json({mensaje: "!No encontrado!"})
+            res.status(404).json({mensaje: "No se encontro ningun registro de alquiler"})
         }
     } catch (error) {
         res.status(500).json(error)
@@ -15,13 +15,11 @@ const getAlquileres = async (req, res, next) => {
 
 const getAlquileresById = async (req, res, next) => {
     try {
-        const alquileres = await Alquiler.findAll({
-            where: {IdAlquiler: req.params.idAlquiler}
-        });
-        if (alquileres.length > 0) {
-            res.status(200).json(alquileres);
+        const alquiler = await Alquiler.findByPk(req.params.id);
+        if (alquiler) {
+            res.status(200).json(alquiler);
         } else {
-            res.status(404).json({mensaje: "¡No encontrado!"})
+            res.status(404).json({mensaje: "No se encontro el alquiler solicitado"})
         }
     } catch (error) {
             res.status(500).json(error);
@@ -31,7 +29,7 @@ const getAlquileresById = async (req, res, next) => {
 const postAlquileres = async (req, res, next) => {
     try {
         if (! ("FechaInicio" in req.body)) {
-            res.status(500).json("Alquiler parameter are required").end();
+            res.status(500).json({mensaje: "Alquiler parameters are required"}).end();
         }
         const inputParams = {
             FechaInicio: req.body.FechaInicio,
@@ -49,8 +47,8 @@ const postAlquileres = async (req, res, next) => {
 
 const putAlquileres = async (req, res, next) => {
     try {
-        const itemToUpdateExists = await Alquiler.findByPk(req.body.IdAlquiler);
-        if (!itemToUpdateExists) {res.status(404).json({mensaje: "No se encontro el alquiler solicitado"})};
+        const itemToUpdate = await Alquiler.findByPk(req.body.IdAlquiler);
+        if (!itemToUpdate) {res.status(404).json({mensaje: "No se encontro el alquiler solicitado"})};
         //update here!
         Alquiler.update(
             {
@@ -62,7 +60,7 @@ const putAlquileres = async (req, res, next) => {
             }, {where: {IdAlquiler: req.body.IdAlquiler}}
         );
         const itemUpdated = await Alquiler.findByPk(req.body.IdAlquiler);
-        res.status(200).json(itemUpdated)
+        res.status(200).json(itemUpdated);
 
     } catch (error) {
         res.status(500);
@@ -72,9 +70,15 @@ const putAlquileres = async (req, res, next) => {
 
 const deleteAlquileres = async (req, res, next) => {
     try {
-
-    } catch (error) {
-        res.status(500);
+        const itemToDelete = await Alquiler.findByPk(req.params.id);
+        if (! itemToDelete) {
+            res.status(404).json({mensaje: "No se encontro el alquiler solicitado"});
+        } else {
+            await itemToDelete.destroy();
+            res.status(200).json(itemToDelete);
+    }
+} catch (error) {
+        res.status(500).json(error);
     }
 }
 
