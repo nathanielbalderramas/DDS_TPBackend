@@ -1,7 +1,4 @@
-/*
-const { Model, DataTypes } = require("sequelize");
-const {db} = require("./db-link");
-*/
+const { DataTypes } = require("sequelize");
 
 module.exports = function (db) {
     const Venta = db.define(

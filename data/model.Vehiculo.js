@@ -1,8 +1,4 @@
 const { DataTypes } = require("sequelize");
-/*
-const {db} = require("./db-link");
-const { Alquiler } = require("./model.Alquiler");
-*/
 
 module.exports = function (db) {
     const Vehiculo = db.define(

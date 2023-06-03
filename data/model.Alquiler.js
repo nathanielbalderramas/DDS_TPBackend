@@ -1,17 +1,11 @@
 const { DataTypes } = require("sequelize");
 
-/*
-const {db} = require("./db-link");
-const { Vehiculo } = require("./model.Vehiculo");
-*/
-
 function calcularEstado(fechaInicio, fechaFin, fechaFinReal) {
     if (fechaFinReal == null && fechaFin < (new Date()).toISOString().split("T")[0]) {return "En Mora"}
     else if (fechaFinReal == null && fechaInicio < fechaFin) {return "En Curso"}
     else if (fechaFinReal !== null && fechaFinReal <= fechaFin) {return "Finalizado"}
     else if (fechaFinReal !== null && fechaFinReal > fechaFin) {return "Finalizado Con Demora"}
 }
-
 
 module.exports = function ( db ) {
     const Alquiler  = db.define(
