@@ -49,6 +49,20 @@ const postAlquileres = async (req, res, next) => {
 
 const putAlquileres = async (req, res, next) => {
     try {
+        const itemToUpdateExists = await Alquiler.findByPk(req.body.IdAlquiler);
+        if (!itemToUpdateExists) {res.status(404).json({mensaje: "No se encontro el alquiler solicitado"})};
+        //update here!
+        Alquiler.update(
+            {
+                FechaInicio: req.body.FechaInicio ?? undefined,
+                FechaFin: req.body.FechaFin ?? undefined,
+                FechaFinReal : req.body.FechaFinReal ?? undefined,
+                Monto: req.body.Monto ?? undefined,
+                IdVehiculo: req.body.IdVehiculo ?? undefined,
+            }, {where: {IdAlquiler: req.body.IdAlquiler}}
+        );
+        const itemUpdated = await Alquiler.findByPk(req.body.IdAlquiler);
+        res.status(200).json(itemUpdated)
 
     } catch (error) {
         res.status(500);

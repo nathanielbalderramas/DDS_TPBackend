@@ -57,7 +57,7 @@ describe("GET /api/alquileres", () => {
     });
   }); 
 
-const sampleAlquiler = {
+const samplePostBody = {
   FechaInicio: "2022-10-05",
   FechaFin: "2022-10-15",
   FechaFinReal: "2022-10-16",
@@ -67,7 +67,7 @@ const sampleAlquiler = {
 
   describe("POST /api/alquileres", () => {
     it("should return the same object we just created", async () => {
-      const res = await request(app).post("/api/alquileres").send(sampleAlquiler);
+      const res = await request(app).post("/api/alquileres").send(samplePostBody);
       expect(res.statusCode).toBe(200);
       expect(res.body).toEqual(
 //        expect.arrayContaining([
@@ -88,3 +88,35 @@ const sampleAlquiler = {
       );
     });
   }); 
+
+const samplePutBody =   {
+    Estado: "Que te importa",
+    IdAlquiler: 3,
+    FechaInicio: "2022-10-05",
+    FechaFin: "2022-10-15",
+    FechaFinReal: "2022-10-18",
+    Monto: 50000,
+    IdVehiculo: 1
+}
+
+describe("PUT /api/alquileres", () => {
+  it("should return the  object with specified modifications", async () => {
+    const res = await request(app).put("/api/alquileres").send(samplePutBody);
+    expect(res.statusCode).toBe(200);
+    expect(res.body).toEqual(
+{
+          Estado: "Finalizado Con Demora",
+          IdAlquiler: 3,
+          FechaInicio: "2022-10-05",
+          FechaFin: "2022-10-15",
+          FechaFinReal: "2022-10-18",
+          Monto: 50000,
+          IdVehiculo: 1,
+          createdAt: expect.any(String),
+          updatedAt: expect.any(String),
+}
+//          })
+//        ])
+    );
+  });
+}); 
