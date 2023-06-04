@@ -1,6 +1,5 @@
 require('dotenv').config({path: "../.env"});
 const path = require("path")
-const { touch_db } = require("./db-init");
 const Sequelize = require("sequelize");
 
 const initMarca = require("./model.Marca");
@@ -11,7 +10,6 @@ const initReparacion = require("./model.Reparacion");
 const initVenta = require("./model.Venta");
 const initEstadoVehiculo = require("./model.EstadoVehiculo");
 
-touch_db();
 const db = new Sequelize({
     dialect:  process.env.DIALECT, 
     storage: process.env.DATABASE, 
