@@ -7,6 +7,7 @@ async function CrearBasesSiNoExiste() {
     CrearBaseEstadoVehiculos();
     CrearBaseVehiculos();
     CrearBaseVentas();
+    CrearBaseAlquileres()
     db.close();
 }
 
@@ -196,6 +197,51 @@ async function CrearBaseVentas() {
     }
 
 }
+
+async function CrearBaseAlquileres() {
+    // abrir base, si no existe el archivo/base lo crea
+
+    let existe = false;
+    let res = null;
+
+    sql = "SELECT count(*) as contar FROM sqlite_schema WHERE type = 'table' and name= 'Alquileres'";
+    res = await db.get(sql, []);
+    if (res.contar > 0) existe = true;
+    if (!existe) {
+        try {
+        await db.run(
+            `CREATE table Alquileres( 
+                IdAlquiler INTEGER PRIMARY KEY AUTOINCREMENT
+              , IdVehiculo INTEGER NOT NULL 
+              , FechaInicio text NOT NULL
+              , FechaFin text NOT NULL
+              , FechaFinReal text
+              , Monto INTEGER 
+              , FOREIGN KEY (IdVehiculo) REFERENCES Vehiculos(IdVehiculo)
+              );`
+        );
+        console.log("tabla Alquileres creada!");
+        await db.run(
+            `insert into Alquileres (IdVehiculo, FechaInicio, FechaFin, FechaFinReal, Monto) values
+            (1, "2023-05-02", "3023-05-02", NULL,          93300),
+            (2, "2023-05-03", "3023-05-03", NULL,         124100),
+            (3, "2023-05-04", "3023-05-04", NULL,          43000),
+            (4, "2023-05-01", "2023-05-21", NULL,          86100),
+            (5, "2023-05-02", "2023-05-22", NULL,          53000),
+            (6, "2023-05-03", "2023-05-23", NULL,          49900),
+            (7, "2008-05-08", "2008-05-18", "2008-05-17",  62600),
+            (8, "2014-09-04", "2014-09-09", "2014-09-09",  74700),
+            (9, "2022-05-06", "2022-05-16", "2022-05-16",  76500),
+            (1, "2003-07-07", "2003-08-07", "2003-08-08", 113500),
+            (2, "2022-05-06", "2022-05-16", "2023-05-16",  76500),
+            (3, "2023-05-01", "2023-06-05", "2023-07-05",  85800)
+      ;`
+        ); } catch (err) {
+            console.log(err)}
+    }
+
+}
+
 
 
 CrearBasesSiNoExiste();

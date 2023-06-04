@@ -85,8 +85,6 @@ describe("GET /api/alquileres", () => {
         FechaFinReal: "2022-10-16",
         Monto: 47400,
         Estado: "Finalizado Con Demora",
-        createdAt: expect.any(String),
-        updatedAt: expect.any(String),
       });
     });
   }); 
@@ -130,8 +128,6 @@ describe("PUT /api/alquileres", () => {
       FechaFinReal: "2022-10-18",
       Monto: 50000,
       IdVehiculo: 1,
-      createdAt: expect.any(String),
-      updatedAt: expect.any(String),
     });
   });
 }); 

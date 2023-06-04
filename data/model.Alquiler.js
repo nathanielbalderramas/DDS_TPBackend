@@ -60,7 +60,10 @@ module.exports = function ( db ) {
                 }
             },
         }, // fields
-        {} // options
+        {
+            tableName: "Alquileres",
+            timestamps: false
+        } // options
     );
     return Alquiler;
 };
