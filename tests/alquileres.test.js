@@ -57,16 +57,24 @@ describe("GET /api/alquileres", () => {
     });
   }); 
 
-const samplePostBody = {
-  FechaInicio: "2022-10-05",
-  FechaFin: "2022-10-15",
-  FechaFinReal: "2022-10-16",
-  Monto: 47400,
-  IdVehiculo: 1,
-}
+
+  describe("GET /api/alquileres/:id", () => {
+    it("should return 404 when there is no object with specified Id", async () => {
+      const res = await request(app).get("/api/alquileres/-1");
+      expect(res.statusCode).toBe(404);
+    });
+  }); 
+
 
   describe("POST /api/alquileres", () => {
     it("should return the same object we just created", async () => {
+      const samplePostBody = {
+        FechaInicio: "2022-10-05",
+        FechaFin: "2022-10-15",
+        FechaFinReal: "2022-10-16",
+        Monto: 47400,
+        IdVehiculo: 1,
+      }
       const res = await request(app).post("/api/alquileres").send(samplePostBody);
       expect(res.statusCode).toBe(200);
       expect(res.body).toEqual({
@@ -80,6 +88,21 @@ const samplePostBody = {
         createdAt: expect.any(String),
         updatedAt: expect.any(String),
       });
+    });
+  }); 
+
+
+  describe("POST /api/alquileres", () => {
+    it("should return 500 when there is a validation error", async () => {
+      const samplePostBody = {
+        FechaInicio: "2022-10-05",
+        FechaFin: "2022-10-15",
+        FechaFinReal: "2022-10-16",
+        Monto: 47400,
+        IdVehiculo: -1,
+      }
+      const res = await request(app).post("/api/alquileres").send(samplePostBody);
+      expect(res.statusCode).toBe(500);
     });
   }); 
 
@@ -152,8 +175,6 @@ describe("PUT /api/alquileres", () => {
 
 
 
-
-
 describe("DELETE /api/alquileres/:id", () => {
   it("should return the deleted object", async () => {
     const getRres = await request(app).get("/api/alquileres");
@@ -161,5 +182,13 @@ describe("DELETE /api/alquileres/:id", () => {
     const res = await request(app).delete("/api/alquileres/"+firstObject.IdAlquiler);
     expect(res.statusCode).toBe(200);
     expect(res.body).toEqual(firstObject);
+  });
+}); 
+
+describe("DELETE /api/alquileres/:id", () => {
+  it("should return 404 when there is no object with specified Id", async () => {
+    const getRres = await request(app).get("/api/alquileres");
+    const res = await request(app).delete("/api/alquileres/-1");
+    expect(res.statusCode).toBe(404);
   });
 }); 
