@@ -83,23 +83,25 @@ const samplePostBody = {
     });
   }); 
 
-const samplePutBody =   {
-    Estado: "Que te importa",
-    IdAlquiler: 3,
-    FechaInicio: "2022-10-05",
-    FechaFin: "2022-10-15",
-    FechaFinReal: "2022-10-18",
-    Monto: 50000,
-    IdVehiculo: 1
-}
 
 describe("PUT /api/alquileres", () => {
   it("should return the  object with specified modifications", async () => {
+    const getRres = await request(app).get("/api/alquileres");
+    const firstObjectId = getRres.body[0].IdAlquiler 
+    const samplePutBody =   {
+      Estado: "Que te importa",
+      IdAlquiler: firstObjectId,
+      FechaInicio: "2022-10-05",
+      FechaFin: "2022-10-15",
+      FechaFinReal: "2022-10-18",
+      Monto: 50000,
+      IdVehiculo: 1
+  }
     const res = await request(app).put("/api/alquileres").send(samplePutBody);
     expect(res.statusCode).toBe(200);
     expect(res.body).toEqual({
       Estado: "Finalizado Con Demora",
-      IdAlquiler: 3,
+      IdAlquiler: firstObjectId,
       FechaInicio: "2022-10-05",
       FechaFin: "2022-10-15",
       FechaFinReal: "2022-10-18",
@@ -110,6 +112,45 @@ describe("PUT /api/alquileres", () => {
     });
   });
 }); 
+
+
+
+describe("PUT /api/alquileres", () => {
+  it("should return 404 when there is no object with specified Id", async () => {
+    const samplePutBody =   {
+      Estado: "Que te importa",
+      IdAlquiler: -1,
+      FechaInicio: "2022-10-05",
+      FechaFin: "2022-10-15",
+      FechaFinReal: "2022-10-18",
+      Monto: 50000,
+      IdVehiculo: 1
+  }
+    const res = await request(app).put("/api/alquileres").send(samplePutBody);
+    expect(res.statusCode).toBe(404);
+  });
+}); 
+
+
+describe("PUT /api/alquileres", () => {
+  it("should return 500 when there is a validation error", async () => {
+    const getRres = await request(app).get("/api/alquileres");
+    const firstObjectId = getRres.body[0].IdAlquiler 
+    const samplePutBody =   {
+      Estado: "Que te importa",
+      IdAlquiler: firstObjectId,
+      FechaInicio: "2022-10-05",
+      FechaFin: "2022-10-15",
+      FechaFinReal: "2022-10-18",
+      Monto: 50000,
+      IdVehiculo: -1
+  }
+    const res = await request(app).put("/api/alquileres").send(samplePutBody);
+    expect(res.statusCode).toBe(500);
+  });
+}); 
+
+
 
 
 
