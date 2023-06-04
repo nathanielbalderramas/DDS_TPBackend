@@ -15,7 +15,7 @@ const initEstadoVehiculo = require("./model.EstadoVehiculo");
 
 // creates Sequelize instance
 const db = new Sequelize({
-    dialect:  process.env.DIALECT, 
+    dialect:  'sqlite', 
     storage: process.env.DATABASE, 
     user: process.env.USER, 
     password: process.env.PASSWORD,
