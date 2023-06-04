@@ -1,15 +1,4 @@
 const { DataTypes } = require("sequelize");
-/*
-            `CREATE table Ventas( 
-                id INTEGER PRIMARY KEY AUTOINCREMENT
-              , Vehiculo INTEGER NOT NULL 
-              , Fecha text NOT NULL
-              , Cliente INTEGER NOT NULL
-              , Estado INTEGER
-              , FOREIGN KEY (Cliente) REFERENCES Clientes(id)
-              , FOREIGN KEY (Vehiculo) REFERENCES Vehiculos(id)
-              );`
-*/
 
 module.exports = function (db) {
     const Venta = db.define(

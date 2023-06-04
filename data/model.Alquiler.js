@@ -1,17 +1,11 @@
 const { DataTypes } = require("sequelize");
 
-/*
-const {db} = require("./db-link");
-const { Vehiculo } = require("./model.Vehiculo");
-*/
-
 function calcularEstado(fechaInicio, fechaFin, fechaFinReal) {
-    if (fechaFinReal == null && fechaInicio < fechaFin) {return "En Curso"}
-    else if (fechaFinReal == null && fechaFin < new Date()) {return "En mora"}
+    if (fechaFinReal == null && fechaFin < (new Date()).toISOString().split("T")[0]) {return "En Mora"}
+    else if (fechaFinReal == null && fechaInicio < fechaFin) {return "En Curso"}
     else if (fechaFinReal !== null && fechaFinReal <= fechaFin) {return "Finalizado"}
-    else if (fechaFinReal !== null && fechaFinReal > fechaFin) {return "Finalzado con demora"}
+    else if (fechaFinReal !== null && fechaFinReal > fechaFin) {return "Finalizado Con Demora"}
 }
-
 
 module.exports = function ( db ) {
     const Alquiler  = db.define(
@@ -23,15 +17,15 @@ module.exports = function ( db ) {
             autoIncrement: true,
             },
         FechaInicio: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             allowNull: false,
             },
         FechaFin: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             allowNull: false,
             validate: {
                 esPosteriorAFechaInicio(value) {
-                    if (Date.parse(value) <= Date.parse(this.FechaInicio)) {
+                    if (value < this.FechaInicio) {
                     throw new Error('FechaFin debe ser posterior a FechaInicio');
                         }
                     }
@@ -42,7 +36,7 @@ module.exports = function ( db ) {
                 allowNull: true,
                 validate: {
                     esPosteriorAFechaInicio(value) {
-                        if (Date.parse(value) <= Date.parse(this.FechaInicio)) {
+                        if (value < this.FechaInicio) {
                         throw new Error('FechaFinReal debe ser posterior a FechaInicio');
                         }
                     }
@@ -66,7 +60,10 @@ module.exports = function ( db ) {
                 }
             },
         }, // fields
-        {} // options
+        {
+            tableName: "Alquileres",
+            timestamps: false
+        } // options
     );
     return Alquiler;
 };

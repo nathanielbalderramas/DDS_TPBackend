@@ -1,7 +1,4 @@
-// allows acces to enviroment variables in proces.env
-require('dotenv').config() 
-
-// crear servidor
+// creates express app
 const express = require("express");
 const app = express(); 
 
@@ -16,23 +13,20 @@ const options = {
       version: '1.0.0',
     },
   },
-  apis: ['./routes/*.js'], // files containing annotations as above
+  apis: ['./routes/*.js'], // files containing swagger annotations
 };
 const openapiSpecification = swaggerJsdoc(options);
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification));
 
-require("./data/sqlite-init"); //Crea la Base si no Existe 
+
+// Initializes database with mock data if needed
+require("./data/sqlite-init"); 
+
+// allows JSON parsing capabilities
+app.use(express.json()) 
 
 
-// utilities
-app.use(express.json()) // allows JSON parsing capabilities
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(openapiSpecification)); // setup swaggerUI
-
-/*
-// add router
-const customRouter = require("./pathTo/customRouter");
-app.use("/customRoute", customRouter);
-*/
-
+// adds routers
 const marcasRoutes = require("./routes/router.Marcas");
 app.use("/api", marcasRoutes);
 
@@ -48,23 +42,12 @@ app.use("/api", ventasRoutes);
 const clientesRoutes = require("./routes/router.Clientes")
 app.use("/api", clientesRoutes);
 
-//...
-
-// example api endpoint
-/**
- * @openapi
- * /:
- *   get:
- *     description: Welcome to swagger-jsdoc!
- *     responses:
- *       200:
- *         description: Returns a mysterious string.
- */
+// sets up a mock home response
 app.get("/", (req, res) => {
   res.send("Mensaje de prueba y bienvenida!");
 });
 
-//...
+// exports app for server and tests
 module.exports = app;
 
 
