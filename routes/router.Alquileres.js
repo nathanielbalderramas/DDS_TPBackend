@@ -8,7 +8,7 @@ const {
     deleteAlquileres,
     mockMakeAlquileres, 
     makeUnVehiculoFalso 
-} = require("../controllers/controller.alquiler");
+} = require("../controllers/controller.Alquiler");
 
 /**
  * @openapi
