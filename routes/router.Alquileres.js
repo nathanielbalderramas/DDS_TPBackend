@@ -6,7 +6,6 @@ const {
     postAlquileres,
     putAlquileres,
     deleteAlquileres,
-    randomMakeAlquileres,
     mockMakeAlquileres, 
     makeUnVehiculoFalso 
 } = require("../controllers/controller.alquiler");

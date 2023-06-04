@@ -1,11 +1,32 @@
-//const { Marca, Proveedor, Estado, Cliente } = require("../data/model.aux");
-const { Marca } = require("../data/db-link")
+const db = require("../data/db-link");
 
 
-const getMarcas = async (req, res, next) => {
+const getMarcas = async (req, res, next)=> {
     try {
-        const marcas = await Marca.findAll();
+        const marcas = await db.Marca.findAll({
+            attributes: [
+              "id",
+              "Nombre"
+        ],
+    });
         res.status(200).json(marcas);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+}
+
+const getMarca = async ( req, res, next) => {
+    let where = {};
+    
+    try {
+        const sendMarca = await db.Marca.findAll({
+            attributes: [
+                "id",
+                "Nombre"
+            ],
+            where,
+          });
+        res.status(200).json(sendMarca);
     } catch (error) {
         res.status(500).json(error);
     }
@@ -22,7 +43,8 @@ const makeMarcas = async (req, res, next) => {
             {nombre: "Fiat"},
             {nombre: "Ford"},
             {nombre: "Honda"},
-            {nombre: "Hyundai"}
+            {nombre: "Hyundai"},
+            {nombre: "VW"}
         ], {validate: true});
         res.status(200).json(marcas);
     } catch (error) {
@@ -32,6 +54,7 @@ const makeMarcas = async (req, res, next) => {
 
 
 module.exports = {
+    getMarca,
     getMarcas,
     makeMarcas
 };

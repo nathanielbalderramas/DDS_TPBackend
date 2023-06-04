@@ -3,7 +3,8 @@ const { DataTypes } = require("sequelize");
 module.exports = function (db) {
     const Marca = db.define(
         "Marca",
-        {id: {type: DataTypes.INTEGER,
+        {
+            id:{type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
             },

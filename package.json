@@ -1,11 +1,12 @@
 {
   "name": "tpbackend",
   "version": "1.0.0",
-  "description": "",
+  "description": "To make it easy for you to get started with GitLab, here's a list of recommended next steps.",
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "test": "jest --testTimeout=5000 --detectOpenHandles --forceExit"
+    "test": "jest --testTimeout=3000 --detectOpenHandles --forceExit",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -18,11 +19,18 @@
     "swagger-jsdoc": "^6.2.8"
   },
   "dependencies": {
+    "aa-sqlite": "^1.0.29",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "Jest": "npm:jest@^29.5.0",
     "jsonwebtoken": "^9.0.0",
+    "path": "^0.12.7",
     "sequelize": "^6.31.1",
     "sqlite3": "^5.1.6",
+    "Swagger-JSdoc": "npm:swagger-jsdoc@^6.2.8",
     "swagger-ui-express": "^4.6.3"
+  },
+  "directories": {
+    "test": "tests"
   }
 }

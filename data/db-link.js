@@ -4,11 +4,12 @@ const { touch_db } = require("./db-init");
 const Sequelize = require("sequelize");
 
 const initMarca = require("./model.Marca");
-
+const initCliente = require("./model.Cliente");
 const initVehiculo = require("./model.Vehiculo");
 const initAlquiler = require("./model.Alquiler");
-const initReparacion = require("./model.Reparacion")
-const initVenta = require("./model.Venta")
+const initReparacion = require("./model.Reparacion");
+const initVenta = require("./model.Venta");
+const initEstadoVehiculo = require("./model.EstadoVehiculo");
 
 touch_db();
 const db = new Sequelize({
@@ -20,12 +21,15 @@ const db = new Sequelize({
 })
 
 const Marca = initMarca(db);
+const Cliente = initCliente(db)
 const Vehiculo = initVehiculo(db);
 const Alquiler = initAlquiler(db);
 const Reparacion = initReparacion(db);
 const Venta = initVenta(db);
+const EstadoVehiculo = initEstadoVehiculo(db);
 
 Vehiculo.hasOne(Alquiler, {foreignKey: "IdVehiculo"})
+Marca.hasOne(Vehiculo, {foreignKey: "Marca"})
 
 check_db(db)
 
@@ -33,7 +37,6 @@ async function check_db(db) {
     // Authentication
     try {
         await db.authenticate();
-        // console.log("Authentications succesfull!")
     } catch (error) {
         console.log("Authentications Failed!")
         console.error(error);
@@ -43,7 +46,6 @@ async function check_db(db) {
     // Sync
     try {
         await db.sync();
-        // console.log("Sync succesfull!");
     } catch (error) {
         console.log("Sync Failed!");
         console.error(error);
@@ -54,8 +56,10 @@ async function check_db(db) {
 module.exports = {
     db: db,
     Marca: Marca,
+    Cliente: Cliente,
     Vehiculo: Vehiculo,
     Alquiler: Alquiler,
     Reparacion: Reparacion,
     Venta: Venta,
+    EstadoVehiculo: EstadoVehiculo,
 };
