@@ -179,7 +179,7 @@ async function CrearBaseVentas() {
               , Cliente INTEGER NOT NULL
               , Estado INTEGER 
               , FOREIGN KEY (Cliente) REFERENCES Clientes(id)
-              , FOREIGN KEY (Vehiculo) REFERENCES Vehiculos(id)
+              , FOREIGN KEY (Vehiculo) REFERENCES Vehiculos(IdVehiculo)
               );`
         );
         console.log("tabla Venta creada!");

@@ -32,8 +32,10 @@ const Venta = initVenta(db);
 const EstadoVehiculo = initEstadoVehiculo(db);
 
 // sets up associations
-Vehiculo.hasOne(Alquiler, {foreignKey: "IdVehiculo"})
-Marca.hasOne(Vehiculo, {foreignKey: "Marca"})
+Vehiculo.hasOne(Alquiler, {foreignKey: "IdVehiculo"});
+Vehiculo.hasOne(Venta, {foreignKey: "Vehiculo"});
+Marca.hasOne(Vehiculo, {foreignKey: "Marca"});
+Cliente.hasOne(Venta, {foreignKey: "Cliente"});
 
 // checks for authentication and sync errors
 check_db(db)
