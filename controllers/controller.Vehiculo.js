@@ -22,6 +22,7 @@ const getVehiculos = async function (req, res, next) {
         where.Estado = req.query.Estado;
     }
 
+    try {
     //Devuele la consulta 
     const { count, rows } = await db.Vehiculo.findAndCountAll({
         attributes: [
@@ -37,12 +38,17 @@ const getVehiculos = async function (req, res, next) {
         where,
     });
     
-    return res.json({ Items: rows, RegistrosTotal: count });
+    return res.status(200).json({ Items: rows, RegistrosTotal: count });
+    } catch(err) {
+        console.log(err);
+        res.status(500).json(err);
+    }
 }
 
 
 
 const getVehiculo = async (req, res, next) => {
+    try {
     let items = await db.Vehiculo.findOne({
         attributes: [
             "IdVehiculo",
@@ -55,7 +61,11 @@ const getVehiculo = async (req, res, next) => {
         ],
         where: { IdVehiculo: req.params.id },
     });
-    res.json(items);
+    res.status(200).json(items);
+    } catch(err) {
+        console.log(err);
+        res.status(500).json(err);
+}
 };
 
 const postVehiculos = async (req, res) => {
@@ -70,6 +80,7 @@ const postVehiculos = async (req, res) => {
         });
         res.status(200).json(data.dataValues); // devolvemos el registro agregado!
     } catch (err) {
+        console.log(err)
         if (err instanceof ValidationError) {
             // si son errores de validacion, los devolvemos
             let messages = '';
@@ -109,6 +120,7 @@ const putVehiculo = async (req, res) => {
 
         res.sendStatus(200);
     } catch (err) {
+        console.log(err)
         if (err instanceof ValidationError) {
             // si son errores de validacion, los devolvemos
             let messages = '';
@@ -144,6 +156,7 @@ const deleteVehiculo = async (req, res) => {
         await data.save();
         res.sendStatus(200);
     } catch (err) {
+        console.log(err)
         if (err instanceof ValidationError) {
             // si son errores de validacion, los devolvemos
             const messages = err.errors.map((x) => x.message);
