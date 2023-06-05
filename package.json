@@ -19,12 +19,12 @@
   },
   "dependencies": {
     "aa-sqlite": "^1.0.29",
-    "dotenv": "^16.0.3",
+    "dotenv": "^16.1.3",
     "express": "^4.18.2",
     "Jest": "npm:jest@^29.5.0",
     "jsonwebtoken": "^9.0.0",
     "path": "^0.12.7",
-    "sequelize": "^6.31.1",
+    "sequelize": "^6.32.0",
     "sqlite3": "^5.1.6",
     "Swagger-JSdoc": "npm:swagger-jsdoc@^6.2.8",
     "swagger-ui-express": "^4.6.3"
