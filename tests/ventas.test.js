@@ -1,5 +1,22 @@
+// allows acces to enviroment variables in proces.env
+require('dotenv').config() 
+
+// extends jest assertions
+const { toBeOneOf, toBeNil } = require("jest-extended");
+expect.extend({toBeOneOf, toBeNil})
+
 const request = require("supertest");
-const app = require("../app.js");
+const app = require("../app");
+
+// Levanta el servidor antes de empezar a testear
+beforeAll(()=>{
+  server = app.listen(4020)
+});
+
+// Cierra el servidor despues de testear
+afterAll(()=>{
+  server.close()
+});
 
 function getRandomArbitrary(min, max) {
     return  Math.floor(Math.random()*(max-min+1)+min);
@@ -29,8 +46,6 @@ describe("GET /api/ventas", () => {
     const res = await request(app).get("/api/ventas");
     expect(res.statusCode).toEqual(200);
     expect(res.body).toEqual(
-     expect.objectContaining({
-      ventas: 
       expect.arrayContaining([
         expect.objectContaining({
             id: expect.any(Number),
@@ -40,7 +55,6 @@ describe("GET /api/ventas", () => {
             Estado: expect.any(Number),
         })
       ]),
-     })
     );
   });
 });
