@@ -1,8 +1,10 @@
+// allows acces to enviroment variables in proces.env
 require('dotenv').config({path: "../.env"});
+
 const path = require("path")
-const { touch_db } = require("./db-init");
 const Sequelize = require("sequelize");
 
+// imports model definition functions
 const initMarca = require("./model.Marca");
 const initCliente = require("./model.Cliente");
 const initVehiculo = require("./model.Vehiculo");
@@ -11,15 +13,16 @@ const initReparacion = require("./model.Reparacion");
 const initVenta = require("./model.Venta");
 const initEstadoVehiculo = require("./model.EstadoVehiculo");
 
-touch_db();
+// creates Sequelize instance
 const db = new Sequelize({
-    dialect:  process.env.DIALECT, 
+    dialect:  'sqlite', 
     storage: process.env.DATABASE, 
     user: process.env.USER, 
     password: process.env.PASSWORD,
     logging: false,
 })
 
+// sets up models
 const Marca = initMarca(db);
 const Cliente = initCliente(db)
 const Vehiculo = initVehiculo(db);
@@ -28,30 +31,14 @@ const Reparacion = initReparacion(db);
 const Venta = initVenta(db);
 const EstadoVehiculo = initEstadoVehiculo(db);
 
-Vehiculo.hasOne(Alquiler, {foreignKey: "IdVehiculo"})
-Marca.hasOne(Vehiculo, {foreignKey: "Marca"})
+// sets up associations
+Vehiculo.hasOne(Alquiler, {foreignKey: "IdVehiculo"});
+Vehiculo.hasOne(Venta, {foreignKey: "Vehiculo"});
+Marca.hasOne(Vehiculo, {foreignKey: "Marca"});
+Cliente.hasOne(Venta, {foreignKey: "Cliente"});
 
+// checks for authentication and sync errors
 check_db(db)
-
-async function check_db(db) {
-    // Authentication
-    try {
-        await db.authenticate();
-    } catch (error) {
-        console.log("Authentications Failed!")
-        console.error(error);
-        return
-    }
-
-    // Sync
-    try {
-        await db.sync();
-    } catch (error) {
-        console.log("Sync Failed!");
-        console.error(error);
-        return;
-    }
-}(db);
 
 module.exports = {
     db: db,
@@ -63,3 +50,25 @@ module.exports = {
     Venta: Venta,
     EstadoVehiculo: EstadoVehiculo,
 };
+
+async function check_db(db) {
+    // checks for authentication and sync errors
+
+    // Authentication step
+    try {
+        await db.authenticate();
+    } catch (error) {
+        console.log("Authentications Failed!")
+        console.error(error);
+        return
+    }
+
+    // Sync step
+    try {
+        await db.sync();
+    } catch (error) {
+        console.log("Sync Failed!");
+        console.error(error);
+        return;
+    }
+}(db);

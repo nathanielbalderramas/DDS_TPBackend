@@ -7,18 +7,19 @@ async function CrearBasesSiNoExiste() {
     CrearBaseEstadoVehiculos();
     CrearBaseVehiculos();
     CrearBaseVentas();
+    CrearBaseAlquileres()
     db.close();
 }
 
 async function CrearBaseVehiculos() {
-    // abrir base, si no existe el archivo/base lo crea
-
+    // checks for table existence
     let existe = false;
     let res = null;
-
     sql = "SELECT count(*) as contar FROM sqlite_schema WHERE type = 'table' and name= 'Vehiculos'";
     res = await db.get(sql, []);
     if (res.contar > 0) existe = true;
+
+    // creates table if it doesn't exists
     if (!existe) {
         await db.run(
             `CREATE table Vehiculos( 
@@ -35,6 +36,7 @@ async function CrearBaseVehiculos() {
         );
         console.log("tabla Vehiculos creada!");
 
+        // populates table with mock data
         await db.run(
             `insert into Vehiculos values
             (1, 5,"Punto 1.8", 'JEQ550',10000,'2010-01-19', 1 ),
@@ -53,14 +55,14 @@ async function CrearBaseVehiculos() {
 }
 
 async function CrearBaseEstadoVehiculos() {
-    // abrir base, si no existe el archivo/base lo crea
-
+    // checks for table existence
     let existe = false;
     let res = null;
-
     sql = "SELECT count(*) as contar FROM sqlite_schema WHERE type = 'table' and name= 'EstadoVehiculo'";
     res = await db.get(sql, []);
     if (res.contar > 0) existe = true;
+    
+    // creates table if it doesn't exists
     if (!existe) {
         await db.run(
             `CREATE table EstadoVehiculo( 
@@ -70,6 +72,7 @@ async function CrearBaseEstadoVehiculos() {
         );
         console.log("tabla EstadoVehiculo creada!");
 
+        // populates table with mock data
         await db.run(
             `insert into EstadoVehiculo values
             (0, "Borrado"),
@@ -84,14 +87,14 @@ async function CrearBaseEstadoVehiculos() {
 }
 
 async function CrearBaseMarcas() {
-    // abrir base, si no existe el archivo/base lo crea
-
+    // checks for table existence
     let existe = false;
     let res = null;
-
     sql = "SELECT count(*) as contar FROM sqlite_schema WHERE type = 'table' and name= 'Marcas'";
     res = await db.get(sql, []);
     if (res.contar > 0) existe = true;
+
+    // creates table if it doesn't exists
     if (!existe) {
         await db.run(
             `CREATE table Marcas( 
@@ -101,6 +104,7 @@ async function CrearBaseMarcas() {
         );
         console.log("tabla Marcas creada!");
 
+        // populates table with mock data
         await db.run(
             `insert into Marcas values
             (1, "Audi"),
@@ -120,14 +124,14 @@ async function CrearBaseMarcas() {
 }
 
 async function CrearBaseClientes() {
-    // abrir base, si no existe el archivo/base lo crea
-
+    // checks for table existence
     let existe = false;
     let res = null;
-
     sql = "SELECT count(*) as contar FROM sqlite_schema WHERE type = 'table' and name= 'Clientes'";
     res = await db.get(sql, []);
     if (res.contar > 0) existe = true;
+    
+    // creates table if it doesn't exists
     if (!existe) {
         await db.run(
             `CREATE table Clientes( 
@@ -137,7 +141,8 @@ async function CrearBaseClientes() {
               );`
         );
         console.log("tabla Clientes creada!");
-
+        
+        // populates table with mock data
         await db.run(
             `insert into Clientes values
             (1, "SOFÍA MARTÍNEZ", "42123450"),
@@ -157,14 +162,14 @@ async function CrearBaseClientes() {
 }
 
 async function CrearBaseVentas() {
-    // abrir base, si no existe el archivo/base lo crea
-
+    // checks for table existence
     let existe = false;
     let res = null;
-
     sql = "SELECT count(*) as contar FROM sqlite_schema WHERE type = 'table' and name= 'Venta'";
     res = await db.get(sql, []);
     if (res.contar > 0) existe = true;
+    
+    // creates table if it doesn't exists
     if (!existe) {
         await db.run(
             `CREATE table Venta( 
@@ -174,11 +179,12 @@ async function CrearBaseVentas() {
               , Cliente INTEGER NOT NULL
               , Estado INTEGER 
               , FOREIGN KEY (Cliente) REFERENCES Clientes(id)
-              , FOREIGN KEY (Vehiculo) REFERENCES Vehiculos(id)
+              , FOREIGN KEY (Vehiculo) REFERENCES Vehiculos(IdVehiculo)
               );`
         );
         console.log("tabla Venta creada!");
 
+        // populates table with mock data
         await db.run(
             `insert into Venta values
             (1, 1, "12-05-2023", 1, 1),
@@ -193,6 +199,52 @@ async function CrearBaseVentas() {
             (10, 10, "12-05-2023", 10, 1)
       ;`
         );
+    }
+
+}
+
+async function CrearBaseAlquileres() {
+    // checks for table existence
+    let existe = false;
+    let res = null;
+    sql = "SELECT count(*) as contar FROM sqlite_schema WHERE type = 'table' and name= 'Alquileres'";
+    res = await db.get(sql, []);
+    if (res.contar > 0) existe = true;
+    
+    // creates table if it doesn't exists
+    if (!existe) {
+        try {
+        await db.run(
+            `CREATE table Alquileres( 
+                IdAlquiler INTEGER PRIMARY KEY AUTOINCREMENT
+              , IdVehiculo INTEGER NOT NULL 
+              , FechaInicio text NOT NULL
+              , FechaFin text NOT NULL
+              , FechaFinReal text
+              , Monto INTEGER 
+              , FOREIGN KEY (IdVehiculo) REFERENCES Vehiculos(IdVehiculo)
+              );`
+        );
+        console.log("tabla Alquileres creada!");
+        
+        // populates table with mock data
+        await db.run(
+            `insert into Alquileres (IdVehiculo, FechaInicio, FechaFin, FechaFinReal, Monto) values
+            (1, "2023-05-02", "3023-05-02", NULL,          93300),
+            (2, "2023-05-03", "3023-05-03", NULL,         124100),
+            (3, "2023-05-04", "3023-05-04", NULL,          43000),
+            (4, "2023-05-01", "2023-05-21", NULL,          86100),
+            (5, "2023-05-02", "2023-05-22", NULL,          53000),
+            (6, "2023-05-03", "2023-05-23", NULL,          49900),
+            (7, "2008-05-08", "2008-05-18", "2008-05-17",  62600),
+            (8, "2014-09-04", "2014-09-09", "2014-09-09",  74700),
+            (9, "2022-05-06", "2022-05-16", "2022-05-16",  76500),
+            (1, "2003-07-07", "2003-08-07", "2003-08-08", 113500),
+            (2, "2022-05-06", "2022-05-16", "2023-05-16",  76500),
+            (3, "2023-05-01", "2023-06-05", "2023-07-05",  85800)
+      ;`
+        ); } catch (err) {
+            console.log(err)}
     }
 
 }

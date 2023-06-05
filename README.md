@@ -1,6 +1,23 @@
 # tpbackend
 Trabajo Práctico Integrador - Etapa 1
 
+# Descripcion del repositorio
+El proyecto incluye una aplicación en express que implementa una API para una consesionaria, que además de vender autos presta servicios de alquileres.
+
+El proyecto está construido con Express, Sequelize, sqlite3, Jest, Swagger-JSdoc y swagger-ui-express
+
+La organización del proyecto es la siguiente.
+
+en la carpeta /data se encuentran los modelos de sequelize para las tablas a implementar y también los scripts para levantar y conectar la base de datos.
+
+En la carpeta /controllers se encuentran las funciones para crear, buscar, modificar y eliminar elementos de las tablas utilizando los modelos de sequelize
+
+En la carpeta /routes se encuentran los custom routers para los distintos endpoints de la API
+
+En la carpeta /tests se encuentran los archivos de pruebas para los distintos endpoints de la API
+
+App.js contiene la configuración de Express y server.js levanta la aplicación de express
+
 # Consigna
 ## Tema: Backend
 
@@ -20,34 +37,16 @@ Este ejercicio les permitirá aplicar los conocimientos adquiridos en clase y po
  
  ## Condiciones de Entrega:
 
-    Para entregar el ejercicio cada grupo deberá: realizar el merge de los commits de todos los integrantes en la rama main del repositorio asociado al proyecto.
+Para entregar el ejercicio cada grupo deberá: realizar el merge de los commits de todos los integrantes en la rama main del repositorio asociado al proyecto.
 
-    Además del proyecto deberá realizar un DER, diagrama de Entidad Relación de las tablas agregadas. Luego comprimir una copia del repositorio, sin incluir la carpeta node_modules, y junto con una imagen del DER generado, todo esto en un archivo que tenga por nombre:
+Además del proyecto deberá realizar un DER, diagrama de Entidad Relación de las tablas agregadas. Luego comprimir una copia del repositorio, sin incluir la carpeta node_modules, y junto con una imagen del DER generado, todo esto en un archivo que tenga por nombre:
+
     Grupo-3KXX-##.zip
-    de acuerdo con la denominación del grupo de aula virtual que les haya tocado.
 
-    Responder a esta tarea en el aula virtual de la siguiente manera:
+de acuerdo con la denominación del grupo de aula virtual que les haya tocado.
 
-        Subir el archivo zip indicado en donde dice subir entrega 
+Responder a esta tarea en el aula virtual de la siguiente manera:
 
-        Y, agregar un link al repositorio en el texto de la entrega.
+    Subir el archivo zip indicado en donde dice subir entrega y agregar un link al repositorio en el texto de la entrega.
 
 Una vez realizadas las acciones anteriores se considera entregado el trabajo y sobre el mismo se realizan las correcciones.
-
-
-# Descripcion del repositorio
-El proyecto incluye una aplicación en express que implementa una API para una consesionaria, que además de vender autos presta servicios de alquileres.
-
-El proyecto está construido con Express, Sequelize, sqlite3, Jest, Swagger-JSdoc y swagger-ui-express
-
-La organización del proyecto es la siguiente.
-
-en la carpeta /data se encuentran los modelos de sequelize para las tablas a implementar y también el script para levantar la base de datos.
-
-En la carpeta /controllers se encuentran las funciones para crear, buscar, modificar y eliminar elementos de las tablas utilizando los modelos de sequelize
-
-En la carpeta /routes se encuentran los custom routers para los distintos endpoints de la API
-
-En la carpeta /tests se encuentran los archivos de pruebas para los distintos endpoints de la API
-
-App.js contiene la configuración de Express y server.js levanta la aplicación de express

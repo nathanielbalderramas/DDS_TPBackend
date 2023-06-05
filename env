@@ -1,4 +1,0 @@
-DATABASE='./data/data.db'
-USER='DDSadmin'
-PASSWORD='A Super Secure Passphrase :)'
-DIALECT='sqlite'
