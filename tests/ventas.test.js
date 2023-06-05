@@ -1,10 +1,6 @@
 // allows acces to enviroment variables in proces.env
 require('dotenv').config() 
 
-// extends jest assertions
-const { toBeOneOf, toBeNil } = require("jest-extended");
-expect.extend({toBeOneOf, toBeNil})
-
 const request = require("supertest");
 const app = require("../app");
 
