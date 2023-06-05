@@ -33,6 +33,7 @@ const ventaAlta = {
 const ventaModificada = {
     Cliente: getRandomArbitrary(1,10),
     Vehiculo: getRandomArbitrary(1,10),
+    Estado: 1
 };
 
 

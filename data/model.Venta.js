@@ -49,9 +49,10 @@ module.exports = function (db) {
                     }
                 }
             },
-
-        }, // fields
-        {} // options
-    );
+        },
+            {
+                timestamps: false,
+            }
+        );
     return Venta;
 };

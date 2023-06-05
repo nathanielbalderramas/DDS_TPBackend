@@ -1,5 +1,4 @@
 const db = require("../data/db-link");
-const express = require('express');
 const { Op, ValidationError } = require("sequelize");
 
 function getFechaActual(){
@@ -50,13 +49,13 @@ const getVenta = async (req, res, next) => {
 }
 };
 
-const postVenta = async (req, res) => {
+const postVenta = async (req, res, next) => {
     try {
         let data = await db.Venta.create({
             Vehiculo: req.body.Vehiculo,
             Fecha: getFechaActual(),
             Cliente: req.body.Cliente,
-            Estado: 1,
+            Estado: 1
         });
     
         res.status(200).json(data.dataValues); // devolvemos el registro agregado!
@@ -115,16 +114,29 @@ const putVenta = async (req, res) => {
     }
 };
 
-const deleteVenta = async (req, res) => {
+const deleteVenta = async (req, res, next) => {
     // baja logica
     try {
-        let data = await db.sequelize.query(
-          "UPDATE Ventas SET Estado = case when Estado 1 =  then 0 else 1 end WHERE id = :id",
-          {
-            replacements: { id: +req.params.id },
-          }
-        );
-  
+        let item = await db.Venta.findOne({
+          attributes: [
+            "id",
+            "Vehiculo",
+            "Fecha",
+            "Cliente",
+            "Estado",
+          ],
+          where: { id: req.params.id },
+        });
+    
+        if (!item) {
+          res.status(404).json({ message: "Venta no encontrada" });
+          return;
+        }
+        
+        item.Estado = 0;
+        
+        await item.save();
+    
         res.sendStatus(200);
       
       } catch (err) {

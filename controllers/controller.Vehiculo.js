@@ -1,5 +1,4 @@
 const db = require("../data/db-link");
-const express = require('express');
 const { Op, ValidationError } = require("sequelize");
 
 const getVehiculos = async function (req, res, next) {

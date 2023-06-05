@@ -85,9 +85,9 @@ module.exports = function (db) {
         {
             // pasar a mayusculas
             hooks: {
-                beforeValidate: function (auto, options) {
-                    if (typeof auto.Marca === "string") {
-                        auto.Marca = auto.Marca.toUpperCase().trim();
+                beforeValidate: function (Vehiculo, options) {
+                    if (typeof Vehiculo.Modelo === "string") {
+                        Vehiculo.Modelo = Vehiculo.Modelo.toUpperCase().trim();
                     }
                 },
             },
