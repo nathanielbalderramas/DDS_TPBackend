@@ -30,17 +30,17 @@ function getFechaActual(){
   }
 
 const ventaAlta = {
-    Fecha: getFechaActual(),
     Cliente: getRandomArbitrary(1,10),
+    Vehiculo: getRandomArbitrary(1,10),
 };
 
 const ventaModificada = {
     Cliente: getRandomArbitrary(1,10),
-    Fecha: getFechaActual(),
+    Vehiculo: getRandomArbitrary(1,10),
 };
 
 
-// test route/vehiculos GET
+// test route/ventas GET
 describe("GET /api/ventas", () => {
   it("Deberia devolver todas las ventas", async () => {
     const res = await request(app).get("/api/ventas");
@@ -100,7 +100,7 @@ describe("PUT /api/ventas/:id", () => {
   });
 });
 
-// test route/vehiculos/:id DELETE
+// test route/ventas/:id DELETE
 describe("DELETE /api/ventas/:id", () => {
   it("Deberia devolver la venta con el id 1 borrado", async () => {
     const res = await request(app).delete("/api/ventas/1");

@@ -253,4 +253,3 @@ async function CrearBaseAlquileres() {
 CrearBasesSiNoExiste();
 
 module.exports = CrearBasesSiNoExiste;
-
